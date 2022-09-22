@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.youneng.troy</groupId>
+    <artifactId>troy-dependency-parent</artifactId>
+    <version>1.1.7-RELEASE</version>
+  </parent>
+
+  <artifactId>${artifactId}</artifactId>
+
+  <groupId>${groupId}</groupId>
+  <packaging>pom</packaging>
+  <version>${version}</version>
+
+  <properties>
+    <api-version>1.0-SNAPSHOT</api-version>
+    <web-version>1.0-SNAPSHOT</web-version>
+    <biz-version>1.0-SNAPSHOT</biz-version>
+    <service-version>1.0-SNAPSHOT</service-version>
+    <dao-version>1.0-SNAPSHOT</dao-version>
+    <client-version>1.0-SNAPSHOT</client-version>
+    <common-version>1.0-SNAPSHOT</common-version>
+  </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}-api</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}-web</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}-biz</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}-service</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}-dao</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}-client</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}-common</artifactId>
+        <version>${version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.6</version>
+      </dependency>
+      <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-core</artifactId>
+        <version>5.7.12</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-openfeign-core</artifactId>
+        <version>3.0.3</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-archetype-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <propertyFile>archetype.properties</propertyFile>
+          <encoding>UTF-8</encoding>
+          <archetypeFilteredExtentions>java,xml,yml</archetypeFilteredExtentions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

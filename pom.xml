@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.youneng.troy</groupId>
+    <artifactId>troy-dependency-parent</artifactId>
+    <version>1.1.7-RELEASE</version>
+    <relativePath/>
+  </parent>
+
+  <artifactId>ProjectTemplate</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <modules>
+    <module>template-dao</module>
+    <module>template-service</module>
+    <module>template-biz</module>
+    <module>template-client</module>
+    <module>template-web</module>
+    <module>template-api</module>
+    <module>template-common</module>
+  </modules>
+
+  <properties>
+    <api-version>1.0-SNAPSHOT</api-version>
+    <web-version>1.0-SNAPSHOT</web-version>
+    <biz-version>1.0-SNAPSHOT</biz-version>
+    <service-version>1.0-SNAPSHOT</service-version>
+    <dao-version>1.0-SNAPSHOT</dao-version>
+    <client-version>1.0-SNAPSHOT</client-version>
+    <common-version>1.0-SNAPSHOT</common-version>
+  </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.youneng.troy</groupId>
+        <artifactId>template-api</artifactId>
+        <version>${api-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.youneng.troy</groupId>
+        <artifactId>template-web</artifactId>
+        <version>${web-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.youneng.troy</groupId>
+        <artifactId>template-biz</artifactId>
+        <version>${biz-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.youneng.troy</groupId>
+        <artifactId>template-service</artifactId>
+        <version>${service-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.youneng.troy</groupId>
+        <artifactId>template-dao</artifactId>
+        <version>${dao-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.youneng.troy</groupId>
+        <artifactId>template-client</artifactId>
+        <version>${client-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.youneng.troy</groupId>
+        <artifactId>template-common</artifactId>
+        <version>${common-version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.6</version>
+      </dependency>
+      <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-core</artifactId>
+        <version>5.7.12</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-openfeign-core</artifactId>
+        <version>3.0.3</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-archetype-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <propertyFile>archetype.properties</propertyFile>
+          <encoding>UTF-8</encoding>
+          <archetypeFilteredExtentions>java,xml,yml</archetypeFilteredExtentions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

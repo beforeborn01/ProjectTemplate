@@ -1,0 +1,1 @@
+service接口入参使用到的bean
