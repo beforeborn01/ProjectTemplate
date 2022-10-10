@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableFeignClients(basePackages = "archetype.it")
 public class TemplateApplication {
 
-    String basicName="basic";
-
     public static ConfigurableApplicationContext applicationContext;
 
     public static void main(String[] args) {

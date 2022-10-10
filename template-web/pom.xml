@@ -38,14 +38,29 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-openfeign-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
-      <version>5.3.20</version>
     </dependency>
 
+
+    <!-- troy自定义组件依赖 -->
+    <dependency>
+      <groupId>com.xdf.pscommon.alert</groupId>
+      <artifactId>base-alert-starter</artifactId>
+    </dependency>
+
+    <!-- 其他三方框架依赖 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>transmittable-thread-local</artifactId>
+    </dependency>
 
   </dependencies>
 

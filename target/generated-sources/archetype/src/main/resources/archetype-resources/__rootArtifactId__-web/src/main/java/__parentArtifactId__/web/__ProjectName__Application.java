@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableFeignClients(basePackages = "${groupId}")
 public class ${ProjectName}Application {
 
-    String ${parentArtifactId}Name="${parentArtifactId}";
-
     public static ConfigurableApplicationContext applicationContext;
 
     public static void main(String[] args) {

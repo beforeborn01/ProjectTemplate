@@ -1,0 +1,1 @@
+mapper接口出参使用到的bean

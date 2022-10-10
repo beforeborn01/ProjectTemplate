@@ -19,6 +19,10 @@
     </dependency>
     <dependency>
       <groupId>com.youneng.troy</groupId>
+      <artifactId>template-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.youneng.troy</groupId>
       <artifactId>template-common</artifactId>
     </dependency>
     <!-- 依赖项目自身的包,请勿增删 end -->
