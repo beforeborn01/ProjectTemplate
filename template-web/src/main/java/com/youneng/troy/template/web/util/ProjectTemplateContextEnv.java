@@ -1,20 +1,17 @@
 package com.youneng.troy.template.web.util;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * 登录人相关信息
+ * @author sunjianzhi
  */
 public class ProjectTemplateContextEnv {
 
-    public static final Logger logger = LogManager.getLogger(ProjectTemplateContextEnv.class);
-
-    private static final TransmittableThreadLocal<Map<String, String>> tigerContextEnvThreadLocal = new TransmittableThreadLocal<Map<String, String>>();
+    private static final TransmittableThreadLocal<Map<String, String>> CONTEXT_ENV_THREAD_LOCAL = new TransmittableThreadLocal<Map<String, String>>();
 
     /**
      * 登录人的email
@@ -24,10 +21,6 @@ public class ProjectTemplateContextEnv {
      * 登录人的名字
      */
     public static final String USER_NAME = "userName";
-    /**
-     * 登录人的角色
-     */
-    public static final String USER_ROLE_TYP = "userRoleTyp";
 
     /**
      * 获取Context
@@ -36,10 +29,10 @@ public class ProjectTemplateContextEnv {
      */
     public static Map<String, String> getContext() {
 
-        if (tigerContextEnvThreadLocal.get() == null) {
-            tigerContextEnvThreadLocal.set(new HashMap<>());
+        if (CONTEXT_ENV_THREAD_LOCAL.get() == null) {
+            CONTEXT_ENV_THREAD_LOCAL.set(new HashMap<>(16));
         }
-        return tigerContextEnvThreadLocal.get();
+        return CONTEXT_ENV_THREAD_LOCAL.get();
     }
 
     /**
@@ -59,7 +52,7 @@ public class ProjectTemplateContextEnv {
      * 清除当前线程数据
      */
     public static void clean() {
-        tigerContextEnvThreadLocal.remove();
+        CONTEXT_ENV_THREAD_LOCAL.remove();
     }
 
     /**
@@ -80,13 +73,4 @@ public class ProjectTemplateContextEnv {
         return getContext().get(USER_NAME);
     }
 
-    /**
-     * 获取登录人的角色
-     * 
-     * @return
-     */
-    public static Integer getUserRoleType() {
-        String type = getContext().get(USER_ROLE_TYP);
-        return StringUtils.isBlank(type) ? null : Integer.parseInt(type);
-    }
 }

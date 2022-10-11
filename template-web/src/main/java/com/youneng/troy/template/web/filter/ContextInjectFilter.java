@@ -1,18 +1,18 @@
 package com.youneng.troy.template.web.filter;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xdf.pscommon.log4j2.core.LogManager;
 import com.xdf.pscommon.log4j2.interfaces.Logger;
 import com.xdf.seal.openfeign.support.SealOpenFeignHeader;
 import com.youneng.seal.api.BaseStatusEnum;
 import com.youneng.seal.api.resp.ObjectResults;
-import com.youneng.tiger.common.env.TigerContextEnv;
+import com.youneng.troy.template.web.util.ProjectTemplateContextEnv;
 import java.io.IOException;
 import java.net.URLDecoder;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
@@ -20,70 +20,65 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 /**
- * 验签的filter
+ * 上下文注入
+ *
+ * @author sunjianzhi
+ * @date 2022-10-11
  */
 @Component
 @WebFilter(urlPatterns = "/", filterName = "contextInjectFilter")
 @Order(Integer.MIN_VALUE)
 public class ContextInjectFilter implements Filter {
 
-    /**
-     * header中的email
-     */
-    private static final String email = "email";
+    public static final Logger LOGGER = LogManager.getLogger(ContextInjectFilter.class);
 
-    /**
-     * header中的name
-     */
-    private static final String name = "name";
+    private static final String EMAIL = "email";
+
+    private static final String NAME = "name";
+
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
-        HttpServletResponse response = (HttpServletResponse)servletResponse;
-        String userEmail = request.getHeader(email);
-        String userName = request.getHeader(name);
-        SealOpenFeignHeader.putHeader(email, userEmail);
-        SealOpenFeignHeader.putHeader(name, userName);
-        TigerContextEnv.setContextEnv(TigerContextEnv.USER_EMAIL, userEmail);
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+        FilterChain filterChain) throws IOException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        String userEmail = request.getHeader(EMAIL);
+        String userName = request.getHeader(NAME);
+        SealOpenFeignHeader.putHeader(EMAIL, userEmail);
+        SealOpenFeignHeader.putHeader(NAME, userName);
+        ProjectTemplateContextEnv.setContextEnv(ProjectTemplateContextEnv.USER_EMAIL, userEmail);
         if (StringUtils.isNotBlank(userName)) {
-            TigerContextEnv.setContextEnv(TigerContextEnv.USER_NAME, URLDecoder.decode(userName, "UTF-8"));
+            ProjectTemplateContextEnv
+                .setContextEnv(ProjectTemplateContextEnv.USER_NAME, URLDecoder.decode(userName,
+                    UTF_8.name()));
         }
 
         try {
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
-            e.printStackTrace();
-            dueException(response, e.getMessage(), BaseStatusEnum.ERROR.getStatus());
+            handleException(response, e.getMessage(), BaseStatusEnum.ERROR.getStatus());
         } finally {
-            TigerContextEnv.clean();
+            ProjectTemplateContextEnv.clean();
             SealOpenFeignHeader.clear();
         }
 
     }
 
-    private void dueException(HttpServletResponse response, String error, int status) {
-        response.setStatus(200);
-        response.setHeader("Content-type", "application/json;charset=UTF-8");
-
+    private void handleException(HttpServletResponse response, String error, int status) {
+        response.setStatus(HttpStatus.OK.value());
+        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         try {
             ObjectMapper mapper = new ObjectMapper();
-            response.getWriter().write(mapper.writeValueAsString(new ObjectResults<>(status, error, null)));
+            response.getWriter()
+                .write(mapper.writeValueAsString(new ObjectResults<>(status, error, null)));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }

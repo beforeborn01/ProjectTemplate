@@ -1,0 +1,63 @@
+#consul、nacos配置中心 相关配置
+spring:
+  application:
+    name: template
+#  main:
+#    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      profile: dev
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        query-passing: true
+    nacos:
+      config:
+        server-addr: http://172.29.64.28:8848
+        file-extension: yaml
+        namespace: troy
+        ext-config[0]:
+          data-id: application-${spring.cloud.config.profile}.yaml
+          group: ${spring.cloud.config.profile}
+          refresh: true
+        ext-config[1]:
+          data-id: ${spring.application.name}-${spring.cloud.config.profile}.yaml
+          group: ${spring.cloud.config.profile}
+          refresh: true
+
+
+########################
+
+# 健康检查相关配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'prometheus,health' #暴露prometheus端点、health端点，其他隐藏
+  endpoint:
+    health:
+      show-details: NEVER
+  health:
+    defaults:
+      enabled: false
+server:
+  port: 9915
+
+logging:
+  level:
+    com.youneng.template.dao.mapper: DEBUG
+    org:
+      springframework:
+        web:
+          servlet:
+            mvc:
+              method:
+                annotation:
+                  RequestMappingHandlerMapping: trace
+

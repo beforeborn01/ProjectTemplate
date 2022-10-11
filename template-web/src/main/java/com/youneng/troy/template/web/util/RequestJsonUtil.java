@@ -1,10 +1,13 @@
 package com.youneng.troy.template.web.util;
 
+import static java.nio.charset.StandardCharsets.*;
+
 import com.xdf.pscommon.log4j2.core.LogManager;
 import com.xdf.pscommon.log4j2.interfaces.Logger;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 
 /**
  * @author lishuai17
@@ -14,40 +17,32 @@ import org.apache.commons.lang3.StringUtils;
 public class RequestJsonUtil {
 
     public static final Logger logger = LogManager.getLogger(RequestJsonUtil.class);
+    private static final String QUOT = "%22";
 
-    /***
-     * 获取 request 中 json 字符串的内容
-     *
-     * @param request
-     * @return : <code>byte[]</code>
-     * @throws IOException
-     */
-    public static String getRequestJsonString(HttpServletRequest request) throws IOException {
-        String submitMehtod = request.getMethod();
-        // GET
-        if (submitMehtod.equals("GET")) {
-            if (StringUtils.isNotEmpty(request.getQueryString())) {
-                return new String(request.getQueryString().getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
-            }
-            return new String("".getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
-        }
-
-        // POST
-        String requestString = getRequestPostStr(request);
-
-        if (StringUtils.isNotBlank(requestString)) {
-            return requestString;
-        }
-
-        if (StringUtils.isNotEmpty(request.getQueryString())) {
-            return new String(request.getQueryString().getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
-        }
-        return new String("".getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
-    }
-
-    public static String getRequestJsonStringNoException(HttpServletRequest request) {
+    public static String getRequestJsonString(HttpServletRequest request) {
         try {
-            return getRequestJsonString(request);
+            String submitMethod = request.getMethod();
+            // GET
+            if (HttpMethod.GET.toString().equals(submitMethod)) {
+                if (StringUtils.isNotEmpty(request.getQueryString())) {
+                    return new String(request.getQueryString().getBytes(ISO_8859_1),
+                        UTF_8).replaceAll(QUOT, "\"");
+                }
+                return new String("".getBytes(ISO_8859_1), UTF_8).replaceAll(
+                    QUOT, "\"");
+            }
+
+            // POST
+            String requestString = getRequestPostStr(request);
+
+            if (StringUtils.isNotBlank(requestString)) {
+                return requestString;
+            }
+            if (StringUtils.isNotEmpty(request.getQueryString())) {
+                return new String(request.getQueryString().getBytes(ISO_8859_1),
+                    UTF_8).replaceAll(QUOT, "\"");
+            }
+            return new String("".getBytes(ISO_8859_1), UTF_8).replaceAll(QUOT, "\"");
         } catch (IOException e) {
             logger.error("获取请求参数异常", e);
         }
@@ -56,28 +51,20 @@ public class RequestJsonUtil {
 
     /**
      * 描述:获取 post 请求的 byte[] 数组
-     * 
-     * <pre>
-     * 举例：
-     * </pre>
-     * 
-     * @param request
-     * @return
-     * @throws IOException
      */
     public static byte[] getRequestPostBytes(HttpServletRequest request) throws IOException {
         int contentLength = request.getContentLength();
         if (contentLength < 0) {
             return null;
         }
-        byte buffer[] = new byte[contentLength];
+        byte[] buffer = new byte[contentLength];
         for (int i = 0; i < contentLength;) {
 
-            int readlen = request.getInputStream().read(buffer, i, contentLength - i);
-            if (readlen == -1) {
+            int readLen = request.getInputStream().read(buffer, i, contentLength - i);
+            if (readLen == -1) {
                 break;
             }
-            i += readlen;
+            i += readLen;
         }
         return buffer;
     }
@@ -94,10 +81,10 @@ public class RequestJsonUtil {
      * @throws IOException
      */
     public static String getRequestPostStr(HttpServletRequest request) throws IOException {
-        byte buffer[] = getRequestPostBytes(request);
+        byte[] buffer = getRequestPostBytes(request);
         String charEncoding = request.getCharacterEncoding();
         if (charEncoding == null) {
-            charEncoding = "UTF-8";
+            charEncoding = UTF_8.name();
         }
         if (null == buffer) {
             return null;

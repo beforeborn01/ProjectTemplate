@@ -53,12 +53,12 @@ public class PvLogAspect {
 
     @Pointcut("execution(* com.youneng.troy.template.web.controller..*Controller.*(..))"
         + " || execution(* com.youneng.troy.template.web.apiimpl..*.*(..))"
-        + " || execution(* com.youneng.troy.template.web.handler.GlobalExceptionHandler.*(..))")
-    public void webLog() {
+        + " || execution(* com.youneng.troy.template.web.handler.GlobalRequestExceptionHandler.*(..))")
+    public void pvLog() {
     }
 
 
-    @Around("webLog()")
+    @Around("pvLog()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 
         StartPvInfo startPvInfo = null;

@@ -91,13 +91,48 @@
         <version>5.7.12</version>
       </dependency>
 
+      <!--troy自定义组件依赖 -->
+      <dependency>
+        <groupId>com.xdf.pscommon</groupId>
+        <artifactId>seal-openfeign-plus-starter</artifactId>
+        <version>1.0.13-H-RELEASE</version>
+      </dependency>
+      <!-- 单测依赖 -->
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers</artifactId>
+        <version>1.17.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>1.17.2</version>
+        <scope>test</scope>
+      </dependency>
       <!-- spring框架依赖 -->
+
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-openfeign-core</artifactId>
         <version>3.0.3</version>
       </dependency>
-
+        <!-- 排除spring引用的logback-->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-logging</artifactId>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.springframework.cloud</groupId>-->
+<!--        <artifactId>spring-cloud-commons</artifactId>-->
+<!--        <version>3.0.3</version>-->
+<!--      </dependency>-->
       <!-- 其他三方框架依赖 -->
       <dependency>
         <groupId>com.alibaba</groupId>
