@@ -1,12 +1,15 @@
 package com.youneng.troy.template.web.util;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
+
+import com.alibaba.ttl.TransmittableThreadLocal;
 
 /**
  * 登录人相关信息
+ * 
  * @author sunjianzhi
  */
 public class ProjectTemplateContextEnv {

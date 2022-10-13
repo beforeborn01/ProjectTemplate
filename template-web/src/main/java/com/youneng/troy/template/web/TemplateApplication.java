@@ -8,7 +8,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 @SpringBootApplication
 @EnableDiscoveryClient
 @ComponentScan("com.youneng.troy")

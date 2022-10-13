@@ -1,13 +1,17 @@
 package com.youneng.troy.template.web.util;
 
-import static java.nio.charset.StandardCharsets.*;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 
 import com.xdf.pscommon.log4j2.core.LogManager;
 import com.xdf.pscommon.log4j2.interfaces.Logger;
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpMethod;
 
 /**
  * @author lishuai17
@@ -25,11 +29,9 @@ public class RequestJsonUtil {
             // GET
             if (HttpMethod.GET.toString().equals(submitMethod)) {
                 if (StringUtils.isNotEmpty(request.getQueryString())) {
-                    return new String(request.getQueryString().getBytes(ISO_8859_1),
-                        UTF_8).replaceAll(QUOT, "\"");
+                    return new String(request.getQueryString().getBytes(ISO_8859_1), UTF_8).replaceAll(QUOT, "\"");
                 }
-                return new String("".getBytes(ISO_8859_1), UTF_8).replaceAll(
-                    QUOT, "\"");
+                return new String("".getBytes(ISO_8859_1), UTF_8).replaceAll(QUOT, "\"");
             }
 
             // POST
@@ -39,8 +41,7 @@ public class RequestJsonUtil {
                 return requestString;
             }
             if (StringUtils.isNotEmpty(request.getQueryString())) {
-                return new String(request.getQueryString().getBytes(ISO_8859_1),
-                    UTF_8).replaceAll(QUOT, "\"");
+                return new String(request.getQueryString().getBytes(ISO_8859_1), UTF_8).replaceAll(QUOT, "\"");
             }
             return new String("".getBytes(ISO_8859_1), UTF_8).replaceAll(QUOT, "\"");
         } catch (IOException e) {

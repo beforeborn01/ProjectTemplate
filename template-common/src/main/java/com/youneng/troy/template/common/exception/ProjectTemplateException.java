@@ -8,7 +8,7 @@ package com.youneng.troy.template.common.exception;
  * @Description:
  * @date Date : 2022年10月10日 17:14
  */
-public class ProjectTemplateException extends RuntimeException{
+public class ProjectTemplateException extends RuntimeException {
 
     /**
      * 业务code

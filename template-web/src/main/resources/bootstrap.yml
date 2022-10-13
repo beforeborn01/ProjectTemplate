@@ -2,8 +2,8 @@
 spring:
   application:
     name: template
-#  main:
-#    allow-bean-definition-overriding: true
+  #  main:
+  #    allow-bean-definition-overriding: true
   cloud:
     config:
       profile: dev
@@ -46,9 +46,10 @@ management:
   health:
     defaults:
       enabled: false
+# web服务端口号
 server:
   port: 9915
-
+# 配置启动时打印web url映射
 logging:
   level:
     com.youneng.template.dao.mapper: DEBUG

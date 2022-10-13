@@ -1,23 +1,28 @@
 package com.youneng.troy.template.web.handler;
 
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
-import com.xdf.seal.openfeign.exception.SealOpenFeignResponseException;
-import com.youneng.seal.api.BaseStatusEnum;
-import com.youneng.seal.api.resp.ObjectResults;
-import com.youneng.seal.api.resp.Results;
-import com.youneng.troy.template.common.exception.ProjectTemplateException;
-import com.youneng.troy.template.web.util.DingTalkAlertUtils;
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.ObjectError;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import com.xdf.pscommon.log4j2.core.LogManager;
+import com.xdf.pscommon.log4j2.interfaces.Logger;
+import com.xdf.seal.openfeign.exception.SealOpenFeignResponseException;
+import com.youneng.seal.api.resp.ObjectResults;
+import com.youneng.seal.api.resp.Results;
+import com.youneng.troy.template.common.exception.ProjectTemplateException;
+import com.youneng.troy.template.web.util.DingTalkAlertUtils;
 
 /**
  * @author sunjianzhi
@@ -28,6 +33,7 @@ public class GlobalRequestExceptionHandler {
     public static final Logger LOGGER = LogManager.getLogger(GlobalRequestExceptionHandler.class);
 
     private static final String SYSTEM_ERROR_MSG = "系统异常 请稍后重试";
+    private static final String PARAM_INVALID = "参数校验异常";
 
     @Autowired
     private DingTalkAlertUtils dingtalkAlertUtils;
@@ -40,37 +46,31 @@ public class GlobalRequestExceptionHandler {
     public Results sealOpenFeignResponseException(SealOpenFeignResponseException e) {
         return e.getResponseObj();
     }
+
     /**
      * 参数异常
      *
      * @param e
      * @return
      */
-    @ExceptionHandler(value = {ValidationException.class, ServletRequestBindingException.class, MethodArgumentTypeMismatchException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler(value = {ValidationException.class, ServletRequestBindingException.class, MethodArgumentTypeMismatchException.class,
+        MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
     @ResponseBody
     public Results paramsException(Exception e) {
         Results results = ObjectResults.createErrorResult(null);
-        results.setMessage(SYSTEM_ERROR_MSG);
+        results.setMessage(PARAM_INVALID);
 
         if (e instanceof MethodArgumentNotValidException) {
-            ObjectError objectError = ((MethodArgumentNotValidException)e).getBindingResult().getAllErrors().get(0);
-            String desc = objectError.getDefaultMessage();
-            results.setStatus(BaseStatusEnum.ERROR.getStatus());
-            results.setMessage(desc);
-        }
-        if (e instanceof ValidationException) {
-            ValidationException ve = ((ValidationException)e);
-        }
-        if (e instanceof MethodArgumentTypeMismatchException) {
-            MethodArgumentTypeMismatchException mte = ((MethodArgumentTypeMismatchException)e);
-        }
-        if (e instanceof ServletRequestBindingException) {
-            ServletRequestBindingException srbe = ((ServletRequestBindingException)e);
+            BindingResult bindingResult = ((MethodArgumentNotValidException)e).getBindingResult();
+            FieldError fieldError = bindingResult.getFieldError();
+            String desc = Optional.ofNullable(fieldError).map(f -> f.getField() + f.getDefaultMessage()).orElse("");
+            results.setDesc(desc);
+        } else {
+            results.setDesc(e.getMessage());
         }
         LOGGER.warn("paramsException", e);
         return results;
     }
-
 
     /**
      * 业务异常
@@ -94,7 +94,7 @@ public class GlobalRequestExceptionHandler {
 
         dingtalkAlertUtils.dingTalkAlert(req, e);
 
-        LOGGER.error("ExceptionHandler : ", e);
+        LOGGER.error("systemException", e);
 
         return results;
     }

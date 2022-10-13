@@ -1,17 +1,14 @@
 package com.youneng.troy.template.web.aspect;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import lombok.Data;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -29,6 +26,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.xdf.pscommon.log4j2.core.LogManager;
+import com.xdf.pscommon.log4j2.interfaces.Logger;
+
+import lombok.Data;
 
 /**
  * Controller层 入参日志
@@ -54,9 +58,7 @@ public class PvLogAspect {
     @Pointcut("execution(* com.youneng.troy.template.web.controller..*Controller.*(..))"
         + " || execution(* com.youneng.troy.template.web.apiimpl..*.*(..))"
         + " || execution(* com.youneng.troy.template.web.handler.GlobalRequestExceptionHandler.*(..))")
-    public void pvLog() {
-    }
-
+    public void pvLog() {}
 
     @Around("pvLog()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -85,7 +87,8 @@ public class PvLogAspect {
         StartPvInfo startPvInfo = buildStartPvInfo(joinPoint);
 
         // pv日志打印
-        LOGGER.pv(project, startPvInfo.getUri(), startPvInfo.getMethod(),"\n入参 ：" + startPvInfo.getParams(), startPvInfo.getUid()," \n"+ startPvInfo.getCustom());
+        LOGGER.pv(project, startPvInfo.getUri(), startPvInfo.getMethod(), "\n入参 ：" + startPvInfo.getParams(), startPvInfo.getUid(),
+            " \n" + startPvInfo.getCustom());
 
         return startPvInfo;
     }
@@ -95,7 +98,7 @@ public class PvLogAspect {
      */
     public void after(StartPvInfo startPvInfo, Object returnObj) {
 
-        if (startPvInfo == null){
+        if (startPvInfo == null) {
             return;
         }
         // 获取打印日志信息
@@ -109,8 +112,7 @@ public class PvLogAspect {
     }
 
     /**
-     * 是否需要开始pv日志
-     * 去除被ControllerAdvice注解的类；忽略特定的url
+     * 是否需要开始pv日志 去除被ControllerAdvice注解的类；忽略特定的url
      */
     private boolean needBeforePvLog(JoinPoint joinPoint) {
         try {
@@ -132,19 +134,19 @@ public class PvLogAspect {
 
     private boolean needPvLog() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
             if (Objects.isNull(attributes)) {
                 return false;
             }
             HttpServletRequest httpServletRequest = attributes.getRequest();
 
-            //OPTIONS 请求不需要记录
+            // OPTIONS 请求不需要记录
             String method = httpServletRequest.getMethod();
             if (method.equalsIgnoreCase(HttpMethod.OPTIONS.name())) {
                 return false;
             }
 
-            //忽略不需要记录的url
+            // 忽略不需要记录的url
             if (CollectionUtils.isEmpty(pvLogConfig.getFilterUrls())) {
                 return true;
             }
@@ -165,8 +167,8 @@ public class PvLogAspect {
     private StartPvInfo buildStartPvInfo(JoinPoint joinPoint) {
         StartPvInfo startPvInfo = new StartPvInfo();
 
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (Objects.isNull(attributes) ) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        if (Objects.isNull(attributes)) {
             return startPvInfo;
         }
 
@@ -184,9 +186,9 @@ public class PvLogAspect {
             String headerValue = httpServletRequest.getHeader(headerName);
             headerMap.put(headerName, headerValue);
         }
-        //设置header信息
+        // 设置header信息
         startPvInfo.setCustom(toJsonString(headerMap));
-        //设置用户信息
+        // 设置用户信息
         startPvInfo.setUid(httpServletRequest.getHeader(pvLogConfig.getUuidName()));
         // 设置入参列表
         startPvInfo.setParams(toJsonString(joinPoint.getArgs()));
@@ -215,7 +217,7 @@ public class PvLogAspect {
         try {
             return MAPPER.writeValueAsString(o);
         } catch (JsonProcessingException e) {
-            LOGGER.error("to json error",e);
+            LOGGER.error("to json error", e);
         }
         return null;
     }
@@ -267,7 +269,7 @@ public class PvLogAspect {
     @Data
     @RefreshScope
     @ConfigurationProperties("pv")
-    public static class PvLogConfig{
+    public static class PvLogConfig {
         /**
          * 需要过滤掉的url
          */

@@ -11,4 +11,31 @@
   <artifactId>template-api</artifactId>
   <version>${api-version}</version>
 
+  <dependencies>
+    <!-- 依赖的troy工具 -->
+    <dependency>
+      <groupId>com.xdf.pscommon</groupId>
+      <artifactId>seal-openfeign-plus-starter</artifactId>
+    </dependency>
+    <!-- spring框架依赖 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
+  </dependencies>
+
 </project>
