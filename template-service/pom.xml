@@ -23,6 +23,18 @@
       <artifactId>template-common</artifactId>
     </dependency>
     <!-- 依赖项目自身的包,请勿增删 end -->
+
+    <!-- spring框架依赖 -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-context</artifactId>
+    </dependency>
+
+    <!-- troy自定义组件依赖 -->
+    <dependency>
+      <groupId>com.xdf.pscommon.alert</groupId>
+      <artifactId>base-alert-starter</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

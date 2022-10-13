@@ -8,6 +8,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.xdf.pscommon.log4j2.core.LogManager;
+import com.xdf.pscommon.log4j2.interfaces.Logger;
+import com.youneng.troy.template.service.util.DingTalkAlertUtil;
+
 @SpringBootApplication
 @EnableDiscoveryClient
 @ComponentScan("com.youneng.troy")
@@ -15,10 +19,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableFeignClients(basePackages = "com.youneng.troy")
 public class TemplateApplication {
 
+    public static final Logger LOGGER = LogManager.getLogger(TemplateApplication.class);
+
     public static ConfigurableApplicationContext applicationContext;
 
     public static void main(String[] args) {
         applicationContext = SpringApplication.run(TemplateApplication.class, args);
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            LOGGER.error("UncaughtExceptionHandler thread=" + t.getName(), e);
+            DingTalkAlertUtil dingTalkAlertUtil = applicationContext.getBean("dingTalkAlertUtil",
+                DingTalkAlertUtil.class);
+            dingTalkAlertUtil.alertException(e);
+        });
     }
 
 }

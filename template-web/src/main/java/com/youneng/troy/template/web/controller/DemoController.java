@@ -33,4 +33,12 @@ public class DemoController {
         return ObjectResults.createSuccessResult();
     }
 
+    /**
+     * 示例
+     */
+    @PostMapping("/error")
+    public ObjectResults<Void> error(@Validated @RequestBody DemoParam demoParam) {
+        throw new RuntimeException("error");
+    }
+
 }

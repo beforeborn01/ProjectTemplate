@@ -5,7 +5,8 @@ package com.youneng.troy.template.common.exception;
  * @version V1.0
  * @Project: ProjectTemplate
  * @Package com.youneng.troy.template.common.exception
- * @Description:
+ * @Description: 业务异常
+ * //codeRules 用于抛出需要提示用户的异常信息
  * @date Date : 2022年10月10日 17:14
  */
 public class ProjectTemplateException extends RuntimeException {

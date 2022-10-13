@@ -32,4 +32,9 @@ public class DemoApiImpl implements DemoApi {
         return ObjectResults.createSuccessResult(new DemoResp(demoReq.getId(), 10));
     }
 
+    @Override
+    @PostMapping("/error")
+    public ObjectResults<DemoResp> error(DemoReq demoReq) {
+        return ObjectResults.createErrorResult("error");
+    }
 }

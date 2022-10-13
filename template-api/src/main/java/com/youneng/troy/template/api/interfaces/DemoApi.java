@@ -21,8 +21,15 @@ public interface DemoApi {
 
     /**
      * 示例
+     * //codeRules 入参bean以Req结尾，出参以Resp结尾
      */
     @PostMapping("/hello")
     ObjectResults<DemoResp> hello(@Validated @RequestBody DemoReq demoReq);
+
+    /**
+     * 示例
+     */
+    @PostMapping("/error")
+    ObjectResults<DemoResp> error(@Validated @RequestBody DemoReq demoReq);
 
 }

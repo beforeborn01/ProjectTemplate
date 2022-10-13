@@ -2,8 +2,6 @@
 spring:
   application:
     name: template
-  #  main:
-  #    allow-bean-definition-overriding: true
   cloud:
     config:
       profile: dev
@@ -49,7 +47,8 @@ management:
 # web服务端口号
 server:
   port: 9915
-# 配置启动时打印web url映射
+
+# log配置
 logging:
   level:
     com.youneng.template.dao.mapper: DEBUG
@@ -60,5 +59,16 @@ logging:
             mvc:
               method:
                 annotation:
-                  RequestMappingHandlerMapping: trace
+                  RequestMappingHandlerMapping: trace # 配置启动时打印web url映射
 
+# 配置钉钉报警
+basealert:
+  dingtalk:
+    enable: true
+    cov: PRO
+    asyn: false
+    threads: 3
+    configs:
+      - name: dev # 本地默认为dev
+        webhook: https://oapi.dingtalk.com/robot/send?access_token=c97aae6ac313861fba3c81e9e81987f91e71f860750f1dad48c74be5949c52d7
+        secret: SEC84f42e9988f39c80c64953d9b666343dbd771f44b6308bb84c9b516f5451d609

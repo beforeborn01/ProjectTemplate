@@ -1,5 +1,6 @@
 package com.youneng.troy.template.web.handler;
 
+import com.youneng.troy.template.web.util.ProjectTemplateContextEnv;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.xdf.pscommon.log4j2.core.LogManager;
 import com.xdf.pscommon.log4j2.interfaces.Logger;
-import com.xdf.seal.openfeign.exception.SealOpenFeignResponseException;
 import com.youneng.seal.api.resp.ObjectResults;
 import com.youneng.seal.api.resp.Results;
 import com.youneng.troy.template.common.exception.ProjectTemplateException;
-import com.youneng.troy.template.web.util.DingTalkAlertUtils;
+import com.youneng.troy.template.service.util.DingTalkAlertUtil;
 
 /**
  * @author sunjianzhi
@@ -36,21 +37,12 @@ public class GlobalRequestExceptionHandler {
     private static final String PARAM_INVALID = "参数校验异常";
 
     @Autowired
-    private DingTalkAlertUtils dingtalkAlertUtils;
-
-    /**
-     * openFeign e
-     */
-    @ExceptionHandler(value = SealOpenFeignResponseException.class)
-    @ResponseBody
-    public Results sealOpenFeignResponseException(SealOpenFeignResponseException e) {
-        return e.getResponseObj();
-    }
+    private DingTalkAlertUtil dingTalkAlertUtil;
 
     /**
      * 参数异常
-     *
-     * @param e
+     * //codeRules 注意这里的参数异常不应作为给用户提示的目的
+     * 
      * @return
      */
     @ExceptionHandler(value = {ValidationException.class, ServletRequestBindingException.class, MethodArgumentTypeMismatchException.class,
@@ -89,13 +81,11 @@ public class GlobalRequestExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Results allException(HttpServletRequest req, Exception e) {
-
         Results results = ObjectResults.createErrorResult(SYSTEM_ERROR_MSG);
-
-        dingtalkAlertUtils.dingTalkAlert(req, e);
-
+        Object urlObject = req.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+        String customMessage = "URL : " + (urlObject == null ? req.getRequestURL() : urlObject);
+        dingTalkAlertUtil.alert(e, ProjectTemplateContextEnv.getUserEmail(), customMessage);
         LOGGER.error("systemException", e);
-
         return results;
     }
 
