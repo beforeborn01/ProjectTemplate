@@ -27,7 +27,7 @@ public class DingTalkAlertUtil {
     @Value("${basealert.dingtalk.enable:true}")
     private boolean dingTalkEnable;
 
-    public void alert(Exception e,String userEmail,String customMessage) {
+    public void alert(Exception e,String user,String customMessage) {
         if (!dingTalkEnable) {
             return;
         }
@@ -35,7 +35,7 @@ public class DingTalkAlertUtil {
             List<String> contents = Arrays.asList("【环境】 : 【 " + env + " 】",
                 "IP : " + InetAddress.getLocalHost().getHostAddress(),
                 "traceId : " + TraceContext.traceId(),
-                "user : " + userEmail,
+                "user : " + user,
                 "customMessage : "+customMessage);
             DingtalkAlert.get(env).alertMarkdown("", null, "template异常信息", contents,
                 "https://kibanalb.staff.xdf.cn/s/youneng-a-pro/app/kibana#/discover?_g=()", e);

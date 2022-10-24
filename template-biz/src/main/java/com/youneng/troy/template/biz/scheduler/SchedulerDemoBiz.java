@@ -19,8 +19,11 @@ public class SchedulerDemoBiz {
     @Resource
     private DingTalkAlertUtil dingTalkAlertUtil;
 
-    //codeRules 对于定时任务、mq消费等后台任务，需要手动进行catch，并根据需要打印日志、发送告警
-    @Scheduled(cron="0/5 * * * * ?")
+    /**
+     * //todo delete
+     * codeRules 对于定时任务、mq消费等后台任务，需要手动进行catch，并根据需要打印日志、发送告警
+     */
+    @Scheduled(cron="0/5 1 * * * ?")
     public void task(){
         try {
             int n = 0;

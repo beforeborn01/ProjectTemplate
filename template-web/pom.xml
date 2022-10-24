@@ -109,15 +109,8 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.youneng.troy.template.web.TemplateApplication</mainClass>
+          <mainClass>com.youneng.troy.template.web.ApplicationStarter</mainClass>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
