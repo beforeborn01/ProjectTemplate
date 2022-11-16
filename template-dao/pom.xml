@@ -18,5 +18,36 @@
       <artifactId>template-common</artifactId>
     </dependency>
     <!-- 依赖项目自身的包,请勿增删 end -->
+
+    <!--troy自定义组件依赖 start -->
+    <dependency>
+      <groupId>com.youneng.seal</groupId>
+      <artifactId>seal-mybatis-plugins</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.youneng.seal</groupId>
+      <artifactId>seal-mybatis-plugins</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.xdf.pscommon</groupId>
+      <artifactId>base-dynamic-datasource</artifactId>
+    </dependency>
+    <!--troy自定义组件依赖 end -->
+
+    <!-- Spring相关 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+    </dependency>
+
+    <!-- 第三方 -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper-spring-boot-starter</artifactId>
+    </dependency>
   </dependencies>
 </project>

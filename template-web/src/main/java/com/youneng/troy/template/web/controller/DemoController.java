@@ -1,15 +1,24 @@
 package com.youneng.troy.template.web.controller;
 
-import com.youneng.troy.template.web.param.DemoParam;
-import javax.validation.Valid;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.youneng.seal.api.resp.ListObjectResults;
 import com.youneng.seal.api.resp.ObjectResults;
+import com.youneng.troy.template.biz.biz.DemoBiz;
+import com.youneng.troy.template.biz.bo.UserGetBO;
+import com.youneng.troy.template.service.dto.UserDTO;
+import com.youneng.troy.template.web.param.DemoParam;
+import com.youneng.troy.template.web.param.UserGetParam;
+import com.youneng.troy.template.web.vo.UserVO;
+
+import cn.hutool.core.bean.BeanUtil;
 
 /**
  * @author : sunjianzhi
@@ -24,12 +33,21 @@ import com.youneng.seal.api.resp.ObjectResults;
 @RequestMapping("template/api/demo")
 public class DemoController {
 
+    @Autowired
+    private DemoBiz demoBiz;
+
+    @PostMapping("/get/user")
+    public ListObjectResults<UserVO> getUsers(@Validated @RequestBody UserGetParam userGetParam) {
+        UserGetBO userGetBO = BeanUtil.toBean(userGetParam, UserGetBO.class);
+        List<UserDTO> userDTOS = demoBiz.getUserById(userGetBO);
+        return ListObjectResults.createSuccessResult(BeanUtil.copyToList(userDTOS, UserVO.class));
+    }
+
     /**
      * 示例
      */
     @PostMapping("/hello")
     public ObjectResults<Void> hello(@Validated @RequestBody DemoParam demoParam) {
-        System.out.println(demoParam);
         return ObjectResults.createSuccessResult();
     }
 

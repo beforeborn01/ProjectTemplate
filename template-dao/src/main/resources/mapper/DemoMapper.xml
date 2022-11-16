@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youneng.troy.template.dao.mapper.DemoMapper">
+  <resultMap id="BaseResultMap" type="com.youneng.troy.template.dao.po.UserPO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <select id="findById" resultMap="BaseResultMap">
+    select * from user where id =#{id}
+  </select>
+  <select id="findUsersByName" resultType="com.youneng.troy.template.dao.po.UserPO">
+    select * from user where name like CONCAT('%', #{nameKeyword}, '%')
+  </select>
+
+</mapper>

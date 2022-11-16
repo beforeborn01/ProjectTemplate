@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25000"/>
+        <!--配置-->
+    </settings>
+    <typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer"/>
+        <typeAlias alias="Long" type="java.lang.Long"/>
+        <typeAlias alias="HashMap" type="java.util.HashMap"/>
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap"/>
+        <typeAlias alias="ArrayList" type="java.util.ArrayList"/>
+        <typeAlias alias="LinkedList" type="java.util.LinkedList"/>
+    </typeAliases>
+
+    <plugins>
+
+        <plugin interceptor="com.youneng.seal.plugins.bigobjectmonitor.BigObjectMyBatisInterceptor">
+            <!--配置sql的慢查询时间阈值-->
+            <property name="slowSqlTime" value="300"/>
+            <!--内存大小的监控指标-->
+            <property name="allowWeight" value="800KB"/>
+            <!--配置监控的大集合个数的阈值-->
+            <property name="allowSize" value="1000"/>
+            <!--是否解析Po的属性，处理嵌套查询的情况-->
+            <property name="analysisField" value="true"/>
+            <!--不打印语句-->
+            <property name="showParam" value="false"/>
+            <!--打印sql信息-->
+            <property name="showSqlInfo" value="true"/>
+            <!--自定义监听-->
+<!--            <property name="observerClassPath" value="com.youneng.tiger.dao.monitor.TigerBigObjectMonitor"/>-->
+        </plugin>
+<!--        <plugin interceptor="com.youneng.tiger.dao.interceptor.CheckWhereInterceptor"/>-->
+    </plugins>
+
+</configuration>

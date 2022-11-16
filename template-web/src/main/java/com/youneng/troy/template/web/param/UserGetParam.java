@@ -1,0 +1,19 @@
+package com.youneng.troy.template.web.param;
+
+import lombok.Data;
+
+/**
+ * @author : sunjianzhi
+ * @version V1.0
+ * @Project: ProjectTemplate
+ * @Package com.youneng.troy.template.web.param
+ * @Description:
+ * @date Date : 2022年11月16日 17:59
+ */
+@Data
+public class UserGetParam {
+
+    private String id;
+
+    private String nameKeyword;
+}

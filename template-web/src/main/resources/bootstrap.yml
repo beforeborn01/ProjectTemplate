@@ -72,3 +72,29 @@ basealert:
       - name: dev # 本地默认为dev
         webhook: https://oapi.dingtalk.com/robot/send?access_token=c97aae6ac313861fba3c81e9e81987f91e71f860750f1dad48c74be5949c52d7
         secret: SEC84f42e9988f39c80c64953d9b666343dbd771f44b6308bb84c9b516f5451d609
+
+
+## //todo 下面配置仅未本地环境使用，正式项目可能要删除以下配置
+mysql:
+  configLocation: classpath:mybatis-config.xml
+  tiger:
+    mapperLocations: classpath*:/mapper/**/*.xml
+seal:
+  route:
+    enable: true
+    data-source-map:
+      normal:
+        master: 'masterDataSource'
+      preTest:
+        master: 'dataSource_preTest'
+    data-source-config-map:
+      masterDataSource :
+        url: jdbc:mysql://localhost:3306/table_copy?useSSL=false&allowMultiQueries=true
+        username: root
+        password: Admin123!
+        driver-class-name: com.mysql.jdbc.Driver
+      dataSource_preTest :
+        url: jdbc:mysql://localhost:3306/tiger2?useSSL=false&allowMultiQueries=true
+        username: root
+        password: Admin123!
+        driver-class-name: com.mysql.jdbc.Driver
