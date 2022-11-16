@@ -1,5 +1,6 @@
 package com.youneng.troy.template.web.aspect;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -56,10 +59,14 @@ public class PvLogAspect {
     private String project;
 
     @Pointcut("execution(* com.youneng.troy.template.web.controller..*Controller.*(..))"
-        + " || execution(* com.youneng.troy.template.web.apiimpl..*.*(..))"
+        + " || execution(* com.youneng.troy.template.web.apiimpl..*ApiImpl.*(..))"
         + " || execution(* com.youneng.troy.template.web.handler.GlobalRequestExceptionHandler.*(..))")
     public void pvLog() {}
 
+    /**
+     * 1、正常请求会走一次这个方法
+     * 2、发生了异常的请求，入参会通过对Controller和ApiImpl的切面打出入参，通过GlobalRequestExceptionHandler的切面打出返参
+     */
     @Around("pvLog()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 
@@ -72,7 +79,7 @@ public class PvLogAspect {
         Object result = joinPoint.proceed();
 
         if (needAfterPvLog()) {
-            after(startPvInfo, result);
+            after(joinPoint,startPvInfo, result);
         }
 
         return result;
@@ -96,10 +103,10 @@ public class PvLogAspect {
     /**
      * 方法执行后打印入参、返参
      */
-    public void after(StartPvInfo startPvInfo, Object returnObj) {
+    public void after(ProceedingJoinPoint joinPoint, StartPvInfo startPvInfo, Object returnObj) {
 
         if (startPvInfo == null) {
-            return;
+           startPvInfo = buildStartPvInfo(joinPoint);
         }
         // 获取打印日志信息
         EndPvInfo endPvInfo = buildAfterPvInfo(returnObj);
@@ -191,7 +198,11 @@ public class PvLogAspect {
         // 设置用户信息
         startPvInfo.setUid(httpServletRequest.getHeader(pvLogConfig.getUuidName()));
         // 设置入参列表
-        startPvInfo.setParams(toJsonString(joinPoint.getArgs()));
+        Object[] args = joinPoint.getArgs();
+        if (args != null && args.length != 0){
+            args = Arrays.stream(args).filter(e-> !(e instanceof ServletRequest) && !(e instanceof ServletResponse) && !(e instanceof Throwable)).toArray();
+        }
+        startPvInfo.setParams(toJsonString(args));
 
         return startPvInfo;
     }

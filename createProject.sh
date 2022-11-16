@@ -1,1 +1,4 @@
-mvn archetype:generate -DarchetypeCatalog=local -DgroupId=com.bc  -Dversion=1.0-SNAPSHOT -Dpackage=com.bc.test -DartifactId=test23
+# 根据模板创建测试项目
+cd ~/code/ttt || exit
+rm -rf test
+mvn archetype:generate -DarchetypeCatalog=local -DgroupId=com.bc.test  -Dversion=1.0-SNAPSHOT  -DartifactId=test -DProjectName=Test

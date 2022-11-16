@@ -9,10 +9,7 @@ find ./ -type f -name "*.bak" | xargs rm
 echo "***************create end***************"
 cd target/generated-sources/archetype/
 mvn clean install
+mvn deploy
 echo "***************archetype install end***************"
 
-# 根据模板创建测试项目
-cd ~/code/ttt
-rm -rf **
-mvn archetype:generate -DarchetypeCatalog=local -DgroupId=com.bc.test  -Dversion=1.0-SNAPSHOT  -DartifactId=test -DProjectName=Test
 
