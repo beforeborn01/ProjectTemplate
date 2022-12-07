@@ -23,7 +23,6 @@ import com.youneng.troy.template.web.ApplicationStarter;
  * @date Date : 2022年11月16日 15:05
  */
 @SpringBootTest(classes = ApplicationStarter.class)
-@Testcontainers
 public class DemoMapperTest extends TestContainerBase {
 
     @Resource

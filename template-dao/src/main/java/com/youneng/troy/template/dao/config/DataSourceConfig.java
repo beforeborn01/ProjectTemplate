@@ -36,7 +36,7 @@ public class DataSourceConfig {
     private String configLocation;
 
     @Bean
-    public SqlSessionFactory sqlSessionFactorys(@Qualifier("routeDataSource") DataSource dataSource) {
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("routeDataSource") DataSource dataSource) {
         logger.info("--------------------  sqlSessionFactory init ---------------------");
         try {
             SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
@@ -51,10 +51,9 @@ public class DataSourceConfig {
             return sessionFactoryBean.getObject();
         } catch (IOException e) {
             logger.error("mybatis resolver mapper*xml is error", e);
-            return null;
         } catch (Exception e) {
             logger.error("mybatis sqlSessionFactoryBean create error", e);
-            return null;
         }
+        return null;
     }
 }

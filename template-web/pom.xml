@@ -93,6 +93,10 @@
     </dependency>
 
     <!-- troy自定义组件依赖 -->
+    <dependency>
+      <groupId>com.xdf.pscommon</groupId>
+      <artifactId>base-filter-starter</artifactId>
+    </dependency>
 
     <!-- 其他三方框架依赖 -->
     <dependency>

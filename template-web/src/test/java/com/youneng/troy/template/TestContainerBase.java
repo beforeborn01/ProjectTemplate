@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 /**
@@ -14,6 +15,7 @@ import org.testcontainers.utility.DockerImageName;
  * @Description:
  * @date Date : 2022年06月20日 14:04
  */
+@Testcontainers
 public class TestContainerBase {
 
     public static MySQLContainer mysql;
