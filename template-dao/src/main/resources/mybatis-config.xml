@@ -37,7 +37,7 @@
             <!--打印sql信息-->
             <property name="showSqlInfo" value="true"/>
             <!--自定义监听-->
-<!--            <property name="observerClassPath" value="com.youneng.tiger.dao.monitor.TigerBigObjectMonitor"/>-->
+            <property name="observerClassPath" value="com.youneng.troy.template.dao.monitor.BigObjectMonitor"/>
         </plugin>
 <!--        <plugin interceptor="com.youneng.tiger.dao.interceptor.CheckWhereInterceptor"/>-->
     </plugins>

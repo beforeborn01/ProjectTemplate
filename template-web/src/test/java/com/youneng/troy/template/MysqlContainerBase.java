@@ -16,7 +16,7 @@ import org.testcontainers.utility.DockerImageName;
  * @date Date : 2022年06月20日 14:04
  */
 @Testcontainers
-public class TestContainerBase {
+public class MysqlContainerBase {
 
     public static MySQLContainer mysql;
 
@@ -42,4 +42,5 @@ public class TestContainerBase {
         registry.add("seal.route.data-source-config-map.masterDatasource.username", mysql::getUsername);
         registry.add("seal.route.data-source-config-map.masterDatasource.password", mysql::getPassword);
     }
+    
 }

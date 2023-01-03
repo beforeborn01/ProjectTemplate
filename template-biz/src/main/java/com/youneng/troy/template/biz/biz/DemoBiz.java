@@ -24,7 +24,7 @@ public class DemoBiz {
     @Autowired
     private DemoService demoService;
 
-    public List<UserDTO> getUserById(UserGetBO userGetBO) {
+    public List<UserDTO> getUserByCondition(UserGetBO userGetBO) {
         // 业务规则判断
         String id = userGetBO.getId();
         String nameKeyword = userGetBO.getNameKeyword();

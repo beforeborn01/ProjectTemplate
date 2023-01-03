@@ -89,12 +89,12 @@ seal:
         master: 'dataSource_preTest'
     data-source-config-map:
       masterDataSource :
-        url: jdbc:mysql://localhost:3306/table_copy?useSSL=false&allowMultiQueries=true
+        url: jdbc:mysql://localhost:3306/db?useSSL=false&allowMultiQueries=true
         username: root
         password: Admin123!
         driver-class-name: com.mysql.jdbc.Driver
       dataSource_preTest :
-        url: jdbc:mysql://localhost:3306/tiger2?useSSL=false&allowMultiQueries=true
+        url: jdbc:mysql://localhost:3306/db_shadow?useSSL=false&allowMultiQueries=true
         username: root
         password: Admin123!
         driver-class-name: com.mysql.jdbc.Driver

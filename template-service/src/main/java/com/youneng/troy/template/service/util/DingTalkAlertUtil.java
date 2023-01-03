@@ -23,7 +23,7 @@ public class DingTalkAlertUtil {
     public static final Logger LOGGER = LogManager.getLogger(DingTalkAlertUtil.class);
 
     @Value("${spring.cloud.config.profile}")
-    private String env;
+    private String ENV;
     @Value("${basealert.dingtalk.enable:true}")
     private boolean dingTalkEnable;
 
@@ -32,12 +32,12 @@ public class DingTalkAlertUtil {
             return;
         }
         try {
-            List<String> contents = Arrays.asList("【环境】 : 【 " + env + " 】",
+            List<String> contents = Arrays.asList("【环境】 : 【 " + ENV + " 】",
                 "IP : " + InetAddress.getLocalHost().getHostAddress(),
                 "traceId : " + TraceContext.traceId(),
                 "user : " + user,
                 "customMessage : "+customMessage);
-            DingtalkAlert.get(env).alertMarkdown("", null, "template异常信息", contents,
+            DingtalkAlert.get(ENV).alertMarkdown("", null, "template异常信息", contents,
                 "https://kibanalb.staff.xdf.cn/s/youneng-a-pro/app/kibana#/discover?_g=()", e);
         } catch (Exception exception) {
             LOGGER.error("钉钉报警异常", e);

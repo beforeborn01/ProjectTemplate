@@ -39,7 +39,7 @@ public class DemoController {
     @PostMapping("/get/user")
     public ListObjectResults<UserVO> getUsers(@Validated @RequestBody UserGetParam userGetParam) {
         UserGetBO userGetBO = BeanUtil.toBean(userGetParam, UserGetBO.class);
-        List<UserDTO> userDTOS = demoBiz.getUserById(userGetBO);
+        List<UserDTO> userDTOS = demoBiz.getUserByCondition(userGetBO);
         return ListObjectResults.createSuccessResult(BeanUtil.copyToList(userDTOS, UserVO.class));
     }
 

@@ -8,9 +8,8 @@ import javax.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-import com.youneng.troy.template.TestContainerBase;
+import com.youneng.troy.template.MysqlContainerBase;
 import com.youneng.troy.template.dao.po.UserPO;
 import com.youneng.troy.template.web.ApplicationStarter;
 
@@ -23,7 +22,7 @@ import com.youneng.troy.template.web.ApplicationStarter;
  * @date Date : 2022年11月16日 15:05
  */
 @SpringBootTest(classes = ApplicationStarter.class)
-public class DemoMapperTest extends TestContainerBase {
+public class DemoMapperMysql extends MysqlContainerBase {
 
     @Resource
     private DemoMapper demoMapper;

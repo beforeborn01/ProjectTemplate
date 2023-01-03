@@ -32,6 +32,10 @@
       <groupId>com.xdf.pscommon</groupId>
       <artifactId>base-dynamic-datasource</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.xdf.pscommon.alert</groupId>
+      <artifactId>base-alert-starter</artifactId>
+    </dependency>
     <!--troy自定义组件依赖 end -->
 
     <!-- Spring相关 -->
