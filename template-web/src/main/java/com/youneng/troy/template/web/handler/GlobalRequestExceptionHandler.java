@@ -1,11 +1,12 @@
 package com.youneng.troy.template.web.handler;
 
-import com.youneng.troy.template.web.util.ProjectTemplateContextEnv;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ValidationException;
-
+import com.xdf.pscommon.log4j2.core.LogManager;
+import com.xdf.pscommon.log4j2.interfaces.Logger;
+import com.youneng.seal.api.resp.ObjectResults;
+import com.youneng.seal.api.resp.Results;
+import com.youneng.troy.template.common.exception.ProjectTemplateException;
+import com.youneng.troy.template.service.util.DingTalkAlertUtil;
+import com.youneng.troy.template.web.util.ContextEnv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -18,12 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.HandlerMapping;
 
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
-import com.youneng.seal.api.resp.ObjectResults;
-import com.youneng.seal.api.resp.Results;
-import com.youneng.troy.template.common.exception.ProjectTemplateException;
-import com.youneng.troy.template.service.util.DingTalkAlertUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ValidationException;
+import java.util.Optional;
 
 /**
  * @author sunjianzhi
@@ -84,7 +82,7 @@ public class GlobalRequestExceptionHandler {
         Results results = ObjectResults.createErrorResult(SYSTEM_ERROR_MSG);
         Object urlObject = req.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         String customMessage = "URL : " + (urlObject == null ? req.getRequestURL() : urlObject);
-        dingTalkAlertUtil.alert(e, ProjectTemplateContextEnv.getUserEmail(), customMessage);
+        dingTalkAlertUtil.alert(e, ContextEnv.getUserEmail(), customMessage);
         LOGGER.error("systemException", e);
         return results;
     }

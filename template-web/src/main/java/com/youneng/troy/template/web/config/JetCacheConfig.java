@@ -20,6 +20,9 @@ import java.util.Map;
 public class JetCacheConfig {
     public static final Logger LOGGER = LogManager.getLogger(JetCacheConfig.class);
 
+    /**
+     * 自定义SpringConfigProvider，使得缓存的放入和读取都可以打出日志
+     */
     @Bean
     @Primary
     public SpringConfigProvider springConfigProvider(GlobalCacheConfig globalCacheConfig) {

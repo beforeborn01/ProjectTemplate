@@ -1,18 +1,17 @@
 package com.youneng.troy.template.web.util;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.alibaba.ttl.TransmittableThreadLocal;
-
 /**
  * 登录人相关信息
- * 
+ *
  * @author sunjianzhi
  */
-public class ProjectTemplateContextEnv {
+public class ContextEnv {
 
     private static final TransmittableThreadLocal<Map<String, String>> CONTEXT_ENV_THREAD_LOCAL = new TransmittableThreadLocal<Map<String, String>>();
 

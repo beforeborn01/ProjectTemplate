@@ -1,9 +1,18 @@
 package com.youneng.troy.template.web.filter;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import java.io.IOException;
-import java.net.URLDecoder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xdf.pscommon.log4j2.core.LogManager;
+import com.xdf.pscommon.log4j2.interfaces.Logger;
+import com.xdf.seal.openfeign.support.SealOpenFeignHeader;
+import com.youneng.seal.api.BaseStatusEnum;
+import com.youneng.seal.api.resp.ObjectResults;
+import com.youneng.troy.template.web.util.ContextEnv;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,21 +21,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLDecoder;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
-import com.xdf.seal.openfeign.support.SealOpenFeignHeader;
-import com.youneng.seal.api.BaseStatusEnum;
-import com.youneng.seal.api.resp.ObjectResults;
-import com.youneng.troy.template.web.util.ProjectTemplateContextEnv;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * 上下文注入
@@ -53,9 +51,9 @@ public class ContextInjectFilter implements Filter {
         String userName = request.getHeader(NAME);
         SealOpenFeignHeader.putHeader(EMAIL, userEmail);
         SealOpenFeignHeader.putHeader(NAME, userName);
-        ProjectTemplateContextEnv.setContextEnv(ProjectTemplateContextEnv.USER_EMAIL, userEmail);
+        ContextEnv.setContextEnv(ContextEnv.USER_EMAIL, userEmail);
         if (StringUtils.isNotBlank(userName)) {
-            ProjectTemplateContextEnv.setContextEnv(ProjectTemplateContextEnv.USER_NAME, URLDecoder.decode(userName, UTF_8.name()));
+            ContextEnv.setContextEnv(ContextEnv.USER_NAME, URLDecoder.decode(userName, UTF_8.name()));
         }
 
         try {
@@ -63,7 +61,7 @@ public class ContextInjectFilter implements Filter {
         } catch (Exception e) {
             handleException(response, e.getMessage(), BaseStatusEnum.ERROR.getStatus());
         } finally {
-            ProjectTemplateContextEnv.clean();
+            ContextEnv.clean();
             SealOpenFeignHeader.clear();
         }
 
