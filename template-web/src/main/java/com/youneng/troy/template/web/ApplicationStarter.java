@@ -1,5 +1,6 @@
 package com.youneng.troy.template.web;
 
+import com.alicp.jetcache.anno.config.EnableMethodCache;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,6 +18,7 @@ import com.youneng.troy.template.service.util.DingTalkAlertUtil;
 @ComponentScan("com.youneng.troy")
 @EnableTransactionManagement
 @EnableFeignClients(basePackages = "com.youneng.troy")
+@EnableMethodCache(basePackages = "com.youneng.troy.template.web")
 public class ApplicationStarter {
 
     public static final Logger LOGGER = LogManager.getLogger(ApplicationStarter.class);

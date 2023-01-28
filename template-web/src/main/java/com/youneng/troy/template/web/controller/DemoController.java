@@ -2,6 +2,7 @@ package com.youneng.troy.template.web.controller;
 
 import java.util.List;
 
+import com.alicp.jetcache.anno.Cached;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,14 @@ public class DemoController {
     public ListObjectResults<UserVO> getUsers(@Validated @RequestBody UserGetParam userGetParam) {
         UserGetBO userGetBO = BeanUtil.toBean(userGetParam, UserGetBO.class);
         List<UserDTO> userDTOS = demoBiz.getUserByCondition(userGetBO);
+        return ListObjectResults.createSuccessResult(BeanUtil.copyToList(userDTOS, UserVO.class));
+    }
+
+    @PostMapping("/get/user/bycache")
+    @Cached(name="cache:ProjectTemplate:DemoController:getUserByCache:")
+    public ListObjectResults<UserVO> getUserByCache(@Validated @RequestBody UserGetParam userGetParam) {
+        UserGetBO userGetBO = BeanUtil.toBean(userGetParam, UserGetBO.class);
+        List<UserDTO> userDTOS = demoBiz.getUserByConditionByCache(userGetBO);
         return ListObjectResults.createSuccessResult(BeanUtil.copyToList(userDTOS, UserVO.class));
     }
 

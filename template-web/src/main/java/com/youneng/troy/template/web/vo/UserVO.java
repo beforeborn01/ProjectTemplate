@@ -2,6 +2,8 @@ package com.youneng.troy.template.web.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author : sunjianzhi
  * @version V1.0
@@ -11,7 +13,7 @@ import lombok.Data;
  * @date Date : 2022年11月16日 18:17
  */
 @Data
-public class UserVO {
+public class UserVO implements Serializable {
 
     private String id;
 

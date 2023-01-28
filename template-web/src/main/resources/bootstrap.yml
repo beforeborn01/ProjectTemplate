@@ -74,7 +74,13 @@ basealert:
         secret: SEC84f42e9988f39c80c64953d9b666343dbd771f44b6308bb84c9b516f5451d609
 
 
-## //todo 下面配置仅未本地环境使用，正式项目可能要删除以下配置
+## //todo 下面配置仅为本地环境使用，正式项目可能要删除以下配置
+jdbc:
+  url: jdbc:mysql://localhost:3306/db?useSSL=false&allowMultiQueries=true
+redis:
+  host: 127.0.0.1
+  port: 88881
+
 mysql:
   configLocation: classpath:mybatis-config.xml
   tiger:
@@ -88,13 +94,38 @@ seal:
       preTest:
         master: 'dataSource_preTest'
     data-source-config-map:
-      masterDataSource :
-        url: jdbc:mysql://localhost:3306/db?useSSL=false&allowMultiQueries=true
+      masterDataSource:
+        url: ${jdbc.url}
         username: root
         password: Admin123!
         driver-class-name: com.mysql.jdbc.Driver
-      dataSource_preTest :
-        url: jdbc:mysql://localhost:3306/db_shadow?useSSL=false&allowMultiQueries=true
+      dataSource_preTest:
+        url: ${jdbc.url}
         username: root
         password: Admin123!
         driver-class-name: com.mysql.jdbc.Driver
+
+# jetcache 缓存配置 示例
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  local:
+    default:
+      type: linkedhashmap
+      keyConvertor: jackson
+      limit: 500
+      expireAfterWriteInMillis: 600000 # 十分钟失效
+  remote:
+    default:
+      type: redis
+      keyConvertor: jackson
+      valueEncoder: java
+      valueDecoder: java
+      expireAfterWriteInMillis: 600000
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${redis.host}
+      port: ${redis.port}
+      database: 13

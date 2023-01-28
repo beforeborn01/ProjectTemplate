@@ -40,4 +40,13 @@ public class DemoBiz {
         }
         return null;
     }
+
+    public List<UserDTO> getUserByConditionByCache(UserGetBO userGetBO) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return this.getUserByCondition(userGetBO);
+    }
 }
