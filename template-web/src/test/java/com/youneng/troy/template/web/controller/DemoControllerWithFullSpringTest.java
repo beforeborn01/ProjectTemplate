@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ApplicationStarter.class)
 @ExtendWith({MysqlContainerBase.class, RedisContainerBase.class}) // 表明依赖的测试套件
 //@DirtiesContext // 配置后则会启动一个新的spring容器
-public class DemoControllerTest {
+public class DemoControllerWithFullSpringTest {
 
     @Resource
     private DemoController demoController;
