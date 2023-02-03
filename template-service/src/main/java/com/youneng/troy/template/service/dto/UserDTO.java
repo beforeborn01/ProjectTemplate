@@ -1,6 +1,8 @@
 package com.youneng.troy.template.service.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author : sunjianzhi
@@ -11,6 +13,8 @@ import lombok.Data;
  * @date Date : 2022年11月16日 17:54
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
 
     private String id;

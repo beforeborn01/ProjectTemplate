@@ -1,12 +1,13 @@
 package com.youneng.troy.template.web.param;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
-
-import lombok.Data;
 
 /**
  * @author : sunjianzhi
@@ -17,6 +18,8 @@ import lombok.Data;
  * @date Date : 2022年10月13日 10:17
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DemoParam {
 
     @NotNull

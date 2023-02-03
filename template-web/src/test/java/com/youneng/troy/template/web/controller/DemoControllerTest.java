@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.time.Duration;
@@ -32,6 +33,8 @@ public class DemoControllerTest {
 
     @Resource
     private DemoController demoController;
+
+    private RestTemplate restTemplate = new RestTemplate();
 
     @Test
     public void should_get_user_by_id() {
