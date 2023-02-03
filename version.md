@@ -11,4 +11,5 @@
 4. nacos
 5. openfeign
 6. dubbo
+7. 影子库支持
 
