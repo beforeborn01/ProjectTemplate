@@ -30,11 +30,17 @@
       <artifactId>spring-cloud-context</artifactId>
     </dependency>
 
-    <!-- troy自定义组件依赖 -->
+    <!-- 其他第三方依赖 -->
     <dependency>
-      <groupId>com.xdf.pscommon.alert</groupId>
-      <artifactId>base-alert-starter</artifactId>
+      <groupId>com.dingtalk.open</groupId>
+      <artifactId>taobao-sdk-java-auto</artifactId>
+      <version>1479188381469-20210112</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.skywalking</groupId>
+      <artifactId>apm-toolkit-trace</artifactId>
     </dependency>
   </dependencies>
+
 
 </project>

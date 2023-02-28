@@ -21,25 +21,4 @@
         <typeAlias alias="LinkedList" type="java.util.LinkedList"/>
     </typeAliases>
 
-    <plugins>
-
-        <plugin interceptor="com.youneng.seal.plugins.bigobjectmonitor.BigObjectMyBatisInterceptor">
-            <!--配置sql的慢查询时间阈值-->
-            <property name="slowSqlTime" value="300"/>
-            <!--内存大小的监控指标-->
-            <property name="allowWeight" value="800KB"/>
-            <!--配置监控的大集合个数的阈值-->
-            <property name="allowSize" value="1000"/>
-            <!--是否解析Po的属性，处理嵌套查询的情况-->
-            <property name="analysisField" value="true"/>
-            <!--不打印语句-->
-            <property name="showParam" value="false"/>
-            <!--打印sql信息-->
-            <property name="showSqlInfo" value="true"/>
-            <!--自定义监听-->
-            <property name="observerClassPath" value="com.youneng.troy.template.dao.monitor.BigObjectMonitor"/>
-        </plugin>
-<!--        <plugin interceptor="com.youneng.tiger.dao.interceptor.CheckWhereInterceptor"/>-->
-    </plugins>
-
 </configuration>

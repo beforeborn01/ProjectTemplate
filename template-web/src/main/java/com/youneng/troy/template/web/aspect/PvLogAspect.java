@@ -1,17 +1,9 @@
 package com.youneng.troy.template.web.aspect;
 
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -30,12 +22,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
-
-import lombok.Data;
+import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * Controller层 入参日志
@@ -46,9 +37,8 @@ import lombok.Data;
 @Component
 @Import(PvLogAspect.PvLogConfig.class)
 @Order(Integer.MIN_VALUE)
+@Slf4j
 public class PvLogAspect {
-
-    public static final Logger LOGGER = LogManager.getLogger(PvLogAspect.class);
 
     private static final JsonMapper MAPPER = new JsonMapper();
 
@@ -94,8 +84,8 @@ public class PvLogAspect {
         StartPvInfo startPvInfo = buildStartPvInfo(joinPoint);
 
         // pv日志打印
-        LOGGER.pv(project, startPvInfo.getUri(), startPvInfo.getMethod(), "\n入参 ：" + startPvInfo.getParams(), startPvInfo.getUid(),
-            " \n" + startPvInfo.getCustom());
+        log.info(project, startPvInfo.getUri(), startPvInfo.getMethod(), "\n入参 ：" + startPvInfo.getParams(), startPvInfo.getUid(),
+                " \n" + startPvInfo.getCustom());
 
         return startPvInfo;
     }
@@ -115,7 +105,7 @@ public class PvLogAspect {
         String custom = "\n" + startPvInfo.getCustom() + "\n 耗时：" + (endPvInfo.endTime - startPvInfo.startTime);
 
         // pv日志打印
-        LOGGER.pv(project, startPvInfo.getUri(), startPvInfo.getMethod(), params, startPvInfo.getUid(), custom);
+        log.info(project, startPvInfo.getUri(), startPvInfo.getMethod(), params, startPvInfo.getUid(), custom);
     }
 
     /**
@@ -130,7 +120,7 @@ public class PvLogAspect {
             }
             return needPvLog();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return true;
     }
@@ -166,7 +156,7 @@ public class PvLogAspect {
 
             return true;
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return false;
         }
     }
@@ -228,7 +218,7 @@ public class PvLogAspect {
         try {
             return MAPPER.writeValueAsString(o);
         } catch (JsonProcessingException e) {
-            LOGGER.error("to json error", e);
+            log.error("to json error", e);
         }
         return null;
     }

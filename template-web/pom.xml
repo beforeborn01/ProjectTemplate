@@ -33,6 +33,10 @@
 
     <!-- 单测依赖 -->
     <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -54,6 +58,10 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-undertow</artifactId>
     </dependency>
     <dependency>
@@ -67,10 +75,6 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-context</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -93,12 +97,6 @@
           <groupId>com.alibaba</groupId>
         </exclusion>
       </exclusions>
-    </dependency>
-
-    <!-- troy自定义组件依赖 -->
-    <dependency>
-      <groupId>com.xdf.pscommon</groupId>
-      <artifactId>base-filter-starter</artifactId>
     </dependency>
 
     <!-- 其他三方框架依赖 -->

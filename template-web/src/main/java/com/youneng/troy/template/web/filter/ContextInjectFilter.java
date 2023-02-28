@@ -1,12 +1,7 @@
 package com.youneng.troy.template.web.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
-import com.xdf.seal.openfeign.support.SealOpenFeignHeader;
-import com.youneng.seal.api.BaseStatusEnum;
-import com.youneng.seal.api.resp.ObjectResults;
 import com.youneng.troy.template.web.util.ContextEnv;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -35,9 +30,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Component
 @WebFilter(urlPatterns = "/", filterName = "contextInjectFilter")
 @Order(Integer.MIN_VALUE)
+@Slf4j
 public class ContextInjectFilter implements Filter {
-
-    public static final Logger LOGGER = LogManager.getLogger(ContextInjectFilter.class);
 
     private static final String EMAIL = "email";
 
@@ -49,32 +43,27 @@ public class ContextInjectFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         String userEmail = request.getHeader(EMAIL);
         String userName = request.getHeader(NAME);
-        SealOpenFeignHeader.putHeader(EMAIL, userEmail);
-        SealOpenFeignHeader.putHeader(NAME, userName);
         ContextEnv.setContextEnv(ContextEnv.USER_EMAIL, userEmail);
         if (StringUtils.isNotBlank(userName)) {
             ContextEnv.setContextEnv(ContextEnv.USER_NAME, URLDecoder.decode(userName, UTF_8.name()));
         }
-
         try {
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
-            handleException(response, e.getMessage(), BaseStatusEnum.ERROR.getStatus());
+            handleException(response, e.getMessage());
         } finally {
             ContextEnv.clean();
-            SealOpenFeignHeader.clear();
         }
 
     }
 
-    private void handleException(HttpServletResponse response, String error, int status) {
-        response.setStatus(HttpStatus.OK.value());
+    private void handleException(HttpServletResponse response, String error) {
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            response.getWriter().write(mapper.writeValueAsString(new ObjectResults<>(status, error, null)));
+            response.getWriter().write(error);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 }

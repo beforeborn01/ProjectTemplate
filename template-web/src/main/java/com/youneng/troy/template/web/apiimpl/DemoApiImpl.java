@@ -1,13 +1,13 @@
 package com.youneng.troy.template.web.apiimpl;
 
 import com.youneng.troy.template.api.interfaces.DemoApi;
+import com.youneng.troy.template.api.req.DemoReq;
+import com.youneng.troy.template.api.resp.DemoResp;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import com.youneng.seal.api.resp.ObjectResults;
-import com.youneng.troy.template.api.req.DemoReq;
-import com.youneng.troy.template.api.resp.DemoResp;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,13 +28,13 @@ public class DemoApiImpl implements DemoApi {
      */
     @Override
     @PostMapping("/hello")
-    public ObjectResults<DemoResp> hello(@Validated @RequestBody DemoReq demoReq) {
-        return ObjectResults.createSuccessResult(new DemoResp(demoReq.getId(), 10));
+    public ResponseEntity<DemoResp> hello(@Validated @RequestBody DemoReq demoReq) {
+        return ResponseEntity.ok(new DemoResp(demoReq.getId(), 10));
     }
 
     @Override
     @PostMapping("/error")
-    public ObjectResults<DemoResp> error(DemoReq demoReq) {
-        return ObjectResults.createErrorResult("error");
+    public ResponseEntity<String> error(DemoReq demoReq) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("errorMsg");
     }
 }

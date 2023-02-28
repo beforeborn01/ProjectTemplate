@@ -6,9 +6,8 @@ import com.alicp.jetcache.anno.support.SpringConfigProvider;
 import com.alicp.jetcache.event.CacheGetEvent;
 import com.alicp.jetcache.event.CachePutEvent;
 import com.alicp.jetcache.external.ExternalCacheBuilder;
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
 import com.youneng.troy.template.web.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,8 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@Slf4j
 public class JetCacheConfig {
-    public static final Logger LOGGER = LogManager.getLogger(JetCacheConfig.class);
 
     /**
      * 自定义SpringConfigProvider，使得缓存的放入和读取都可以打出日志
@@ -39,12 +38,12 @@ public class JetCacheConfig {
             externalCacheBuilder.addMonitor(event -> {
                 if (event instanceof CachePutEvent) {
                     CachePutEvent putEvent = (CachePutEvent)event;
-                    LOGGER.sealInfo("添加缓存 " + putEvent.getResult().isSuccess() + " key = "
+                    log.info("添加缓存 " + putEvent.getResult().isSuccess() + " key = "
                             + JsonUtil.toJsonString(putEvent.getKey()) + " value="
                             + JsonUtil.toJsonString(putEvent.getValue()));
                 } else if (event instanceof CacheGetEvent) {
                     CacheGetEvent getEvent = (CacheGetEvent)event;
-                    LOGGER.sealInfo("获取缓存 " + getEvent.getResult().isSuccess() + " key = "
+                    log.info("获取缓存 " + getEvent.getResult().isSuccess() + " key = "
                             + JsonUtil.toJsonString(getEvent.getKey()) + " value="
                             + JsonUtil.toJsonString(getEvent.getResult().getValue()));
                 }

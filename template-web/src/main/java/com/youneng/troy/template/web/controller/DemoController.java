@@ -1,25 +1,21 @@
 package com.youneng.troy.template.web.controller;
 
-import java.util.List;
-
+import cn.hutool.core.bean.BeanUtil;
 import com.alicp.jetcache.anno.Cached;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.youneng.seal.api.resp.ListObjectResults;
-import com.youneng.seal.api.resp.ObjectResults;
 import com.youneng.troy.template.biz.biz.DemoBiz;
 import com.youneng.troy.template.biz.bo.UserGetBO;
+import com.youneng.troy.template.common.results.ListObjectResults;
+import com.youneng.troy.template.common.results.ObjectResults;
 import com.youneng.troy.template.service.dto.UserDTO;
 import com.youneng.troy.template.web.param.DemoParam;
 import com.youneng.troy.template.web.param.UserGetParam;
 import com.youneng.troy.template.web.vo.UserVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import cn.hutool.core.bean.BeanUtil;
+import java.util.List;
 
 /**
  * @author : sunjianzhi
@@ -38,18 +34,19 @@ public class DemoController {
     private DemoBiz demoBiz;
 
     @PostMapping("/get/user")
+    @ResponseBody
     public ListObjectResults<UserVO> getUsers(@Validated @RequestBody UserGetParam userGetParam) {
         UserGetBO userGetBO = BeanUtil.toBean(userGetParam, UserGetBO.class);
         List<UserDTO> userDTOS = demoBiz.getUserByCondition(userGetBO);
-        return ListObjectResults.createSuccessResult(BeanUtil.copyToList(userDTOS, UserVO.class));
+        return ListObjectResults.ok(BeanUtil.copyToList(userDTOS, UserVO.class));
     }
 
     @PostMapping("/get/user/bycache")
-    @Cached(name="cache:ProjectTemplate:DemoController:getUserByCache:")
+    @Cached(name = "cache:ProjectTemplate:DemoController:getUserByCache:")
     public ListObjectResults<UserVO> getUserByCache(@Validated @RequestBody UserGetParam userGetParam) {
         UserGetBO userGetBO = BeanUtil.toBean(userGetParam, UserGetBO.class);
         List<UserDTO> userDTOS = demoBiz.getUserByConditionByCache(userGetBO);
-        return ListObjectResults.createSuccessResult(BeanUtil.copyToList(userDTOS, UserVO.class));
+        return ListObjectResults.ok(BeanUtil.copyToList(userDTOS, UserVO.class));
     }
 
     /**
@@ -57,14 +54,14 @@ public class DemoController {
      */
     @PostMapping("/hello")
     public ObjectResults<Void> hello(@Validated @RequestBody DemoParam demoParam) {
-        return ObjectResults.createSuccessResult();
+        return ObjectResults.ok();
     }
 
     /**
      * 示例
      */
     @PostMapping("/error")
-    public ObjectResults<Void> error(@Validated @RequestBody DemoParam demoParam) {
+    public ResponseEntity<Void> error(@Validated @RequestBody DemoParam demoParam) {
         throw new RuntimeException("error");
     }
 

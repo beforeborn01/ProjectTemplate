@@ -1,22 +1,20 @@
 package com.youneng.troy.template.web.controller;
 
-import com.youneng.seal.api.resp.ListObjectResults;
 import com.youneng.troy.template.MysqlContainerBase;
 import com.youneng.troy.template.RedisContainerBase;
 import com.youneng.troy.template.common.exception.ProjectTemplateException;
+import com.youneng.troy.template.common.results.ListObjectResults;
 import com.youneng.troy.template.web.ApplicationStarter;
 import com.youneng.troy.template.web.param.UserGetParam;
 import com.youneng.troy.template.web.vo.UserVO;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author : sunjianzhi
@@ -34,28 +32,29 @@ public class DemoControllerTest {
     @Resource
     private DemoController demoController;
 
-    private RestTemplate restTemplate = new RestTemplate();
-
     @Test
     public void should_get_user_by_id() {
         ListObjectResults<UserVO> users = demoController.getUsers(new UserGetParam("1", ""));
+        assertNotNull(users.getData());
         assertEquals(1, users.getData().size());
+        assertEquals("1", users.getData().get(0).getId());
     }
 
     @Test
     public void should_get_user_by_keyword() {
         ListObjectResults<UserVO> users = demoController.getUsers(new UserGetParam("", "zhang"));
+        assertNotNull(users.getData());
         assertEquals(2, users.getData().size());
     }
 
     @Test
     public void should_throw_exception_when_id_keyword_both_assign() {
-        Assertions.assertThrows(ProjectTemplateException.class, () -> demoController.getUsers(new UserGetParam("1", "zhang")));
+        assertThrows(ProjectTemplateException.class, () -> demoController.getUsers(new UserGetParam("1", "zhang")));
     }
 
     @Test
     public void should_use_cache_when_second_invoke() {
         demoController.getUserByCache(new UserGetParam("", "zhang"));
-        Assertions.assertTimeout(Duration.ofSeconds(1), () -> demoController.getUserByCache(new UserGetParam("", "zhang")));
+        assertTimeout(Duration.ofSeconds(1), () -> demoController.getUserByCache(new UserGetParam("", "zhang")));
     }
 }

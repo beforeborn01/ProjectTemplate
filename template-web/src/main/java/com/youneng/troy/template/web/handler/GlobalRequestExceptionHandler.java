@@ -1,13 +1,13 @@
 package com.youneng.troy.template.web.handler;
 
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
-import com.youneng.seal.api.resp.ObjectResults;
-import com.youneng.seal.api.resp.Results;
 import com.youneng.troy.template.common.exception.ProjectTemplateException;
 import com.youneng.troy.template.service.util.DingTalkAlertUtil;
 import com.youneng.troy.template.web.util.ContextEnv;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -27,12 +27,10 @@ import java.util.Optional;
  * @author sunjianzhi
  */
 @ControllerAdvice
+@Slf4j
 public class GlobalRequestExceptionHandler {
 
-    public static final Logger LOGGER = LogManager.getLogger(GlobalRequestExceptionHandler.class);
-
-    private static final String SYSTEM_ERROR_MSG = "系统异常 请稍后重试";
-    private static final String PARAM_INVALID = "参数校验异常";
+    private static final int BIZ_EXCEPTION_CODE = 5001;
 
     @Autowired
     private DingTalkAlertUtil dingTalkAlertUtil;
@@ -40,26 +38,24 @@ public class GlobalRequestExceptionHandler {
     /**
      * 参数异常
      * //codeRules 注意这里的参数异常不应作为给用户提示的目的
-     * 
+     *
      * @return
      */
-    @ExceptionHandler(value = {ValidationException.class, ServletRequestBindingException.class, MethodArgumentTypeMismatchException.class,
-        MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
+    @ExceptionHandler(value = {ValidationException.class, ServletRequestBindingException.class, MethodArgumentTypeMismatchException.class, MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
     @ResponseBody
-    public Results paramsException(Exception e) {
-        Results results = ObjectResults.createErrorResult(null);
-        results.setMessage(PARAM_INVALID);
-
+    public ResponseEntity<String> paramsException(Exception e) {
+        //返回400，表示错误的请求
+        BodyBuilder bodyBuilder = ResponseEntity.badRequest();
         if (e instanceof MethodArgumentNotValidException) {
-            BindingResult bindingResult = ((MethodArgumentNotValidException)e).getBindingResult();
+            BindingResult bindingResult = ((MethodArgumentNotValidException) e).getBindingResult();
             FieldError fieldError = bindingResult.getFieldError();
             String desc = Optional.ofNullable(fieldError).map(f -> f.getField() + f.getDefaultMessage()).orElse("");
-            results.setDesc(desc);
+            bodyBuilder.body(desc);
         } else {
-            results.setDesc(e.getMessage());
+            bodyBuilder.body(e.getMessage());
         }
-        LOGGER.warn("paramsException", e);
-        return results;
+        log.warn("paramsException", e);
+        return bodyBuilder.build();
     }
 
     /**
@@ -67,10 +63,11 @@ public class GlobalRequestExceptionHandler {
      */
     @ExceptionHandler(value = ProjectTemplateException.class)
     @ResponseBody
-    public Results templateException(ProjectTemplateException e) {
-        Results results = ObjectResults.createErrorResult(e.getMessage());
-        LOGGER.warn("templateException", e);
-        return results;
+    public ResponseEntity<String> templateException(ProjectTemplateException e) {
+        //返回自定义状态码5001，表示业务异常
+        BodyBuilder bodyBuilder = ResponseEntity.status(BIZ_EXCEPTION_CODE);
+        log.warn("templateException", e);
+        return bodyBuilder.body(e.getMessage());
     }
 
     /**
@@ -78,13 +75,13 @@ public class GlobalRequestExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public Results allException(HttpServletRequest req, Exception e) {
-        Results results = ObjectResults.createErrorResult(SYSTEM_ERROR_MSG);
+    public ResponseEntity<String> allException(HttpServletRequest req, Exception e) {
+        //返回自定义状态码5001，表示业务异常
+        BodyBuilder bodyBuilder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
         Object urlObject = req.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         String customMessage = "URL : " + (urlObject == null ? req.getRequestURL() : urlObject);
         dingTalkAlertUtil.alert(e, ContextEnv.getUserEmail(), customMessage);
-        LOGGER.error("systemException", e);
-        return results;
+        log.error("systemException", e);
+        return bodyBuilder.body("{\"error\":\"系统异常，请稍后再试\"}");
     }
-
 }

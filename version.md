@@ -5,11 +5,19 @@
 4. v-spring-3  -- 对应spring-boot 3.x版本依赖，jdk17
 
 ## v-rich-v1 集成的三方组件
-1. mybatis、动态数据源切换
+
+1. mybatis
 2. redis
 3. jetcache
 4. nacos
 5. openfeign
 6. dubbo
 7. 影子库支持
+8. 大对象监控
 
+待支持特性：
+
+1. 日志格式支持pv
+2. traceId贯穿流程
+3. feign调用支持添加header
+4. 动态数据源切换

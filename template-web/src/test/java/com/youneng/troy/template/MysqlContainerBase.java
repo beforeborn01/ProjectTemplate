@@ -26,8 +26,8 @@ public class MysqlContainerBase implements BeforeAllCallback {
                     .withPassword("admin").withUsername("admin"); // 指定登录信息，不指定也可以。指定后可以通过外部工具直接连接mysql进行查看
             mysql.start();
             System.setProperty("jdbc.url", mysql.getJdbcUrl());// 使用容器对象获取jdbcUrl，会自动设置合适的ip和端口号
-            System.setProperty("seal.route.data-source-config-map.masterDatasource.username", mysql.getUsername());
-            System.setProperty("seal.route.data-source-config-map.masterDatasource.password", mysql.getPassword());
+            System.setProperty("jdbc.username", mysql.getUsername());
+            System.setProperty("jdbc.password", mysql.getPassword());
         }
     }
 }

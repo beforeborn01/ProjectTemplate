@@ -1,12 +1,12 @@
 package com.youneng.troy.template.api.interfaces;
 
+import com.youneng.troy.template.api.req.DemoReq;
+import com.youneng.troy.template.api.resp.DemoResp;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.youneng.seal.api.resp.ObjectResults;
-import com.youneng.troy.template.api.req.DemoReq;
-import com.youneng.troy.template.api.resp.DemoResp;
 
 /**
  * @author : sunjianzhi
@@ -24,12 +24,12 @@ public interface DemoApi {
      * //codeRules 入参bean以Req结尾，出参以Resp结尾
      */
     @PostMapping("/hello")
-    ObjectResults<DemoResp> hello(@Validated @RequestBody DemoReq demoReq);
+    ResponseEntity<DemoResp> hello(@Validated @RequestBody DemoReq demoReq);
 
     /**
      * 示例
      */
     @PostMapping("/error")
-    ObjectResults<DemoResp> error(@Validated @RequestBody DemoReq demoReq);
+    ResponseEntity<String> error(@Validated @RequestBody DemoReq demoReq);
 
 }

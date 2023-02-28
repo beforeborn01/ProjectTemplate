@@ -19,10 +19,5 @@
     </dependency>
     <!-- 依赖项目自身的包,请勿增删 end -->
 
-    <!-- 依赖的troy工具 -->
-    <dependency>
-      <groupId>com.xdf.pscommon</groupId>
-      <artifactId>seal-openfeign-plus-starter</artifactId>
-    </dependency>
   </dependencies>
 </project>

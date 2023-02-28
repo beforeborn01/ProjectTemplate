@@ -1,26 +1,23 @@
 package com.youneng.troy.template.web.util;
 
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 
-import com.xdf.pscommon.log4j2.core.LogManager;
-import com.xdf.pscommon.log4j2.interfaces.Logger;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author lishuai17
  * @create 2019-03-27 15:56
  * @desc
  **/
+@Slf4j
 public class RequestJsonUtil {
 
-    public static final Logger logger = LogManager.getLogger(RequestJsonUtil.class);
     private static final String QUOT = "%22";
 
     public static String getRequestJsonString(HttpServletRequest request) {
@@ -45,7 +42,7 @@ public class RequestJsonUtil {
             }
             return new String("".getBytes(ISO_8859_1), UTF_8).replaceAll(QUOT, "\"");
         } catch (IOException e) {
-            logger.error("获取请求参数异常", e);
+            log.error("获取请求参数异常", e);
         }
         return null;
     }

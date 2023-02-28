@@ -12,11 +12,6 @@
   <version>${api-version}</version>
 
   <dependencies>
-    <!-- 依赖的troy工具 -->
-    <dependency>
-      <groupId>com.xdf.pscommon</groupId>
-      <artifactId>seal-openfeign-plus-starter</artifactId>
-    </dependency>
     <!-- spring框架依赖 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
