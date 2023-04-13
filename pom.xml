@@ -12,7 +12,7 @@
   </parent>
 
   <artifactId>ProjectTemplate</artifactId>
-  <groupId>com.youneng.troy</groupId>
+  <groupId>com.bc</groupId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
 
@@ -56,37 +56,37 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.youneng.troy</groupId>
+        <groupId>com.bc</groupId>
         <artifactId>template-api</artifactId>
         <version>${api-version}</version>
       </dependency>
       <dependency>
-        <groupId>com.youneng.troy</groupId>
+        <groupId>com.bc</groupId>
         <artifactId>template-web</artifactId>
         <version>${web-version}</version>
       </dependency>
       <dependency>
-        <groupId>com.youneng.troy</groupId>
+        <groupId>com.bc</groupId>
         <artifactId>template-biz</artifactId>
         <version>${biz-version}</version>
       </dependency>
       <dependency>
-        <groupId>com.youneng.troy</groupId>
+        <groupId>com.bc</groupId>
         <artifactId>template-service</artifactId>
         <version>${service-version}</version>
       </dependency>
       <dependency>
-        <groupId>com.youneng.troy</groupId>
+        <groupId>com.bc</groupId>
         <artifactId>template-dao</artifactId>
         <version>${dao-version}</version>
       </dependency>
       <dependency>
-        <groupId>com.youneng.troy</groupId>
+        <groupId>com.bc</groupId>
         <artifactId>template-client</artifactId>
         <version>${client-version}</version>
       </dependency>
       <dependency>
-        <groupId>com.youneng.troy</groupId>
+        <groupId>com.bc</groupId>
         <artifactId>template-common</artifactId>
         <version>${common-version}</version>
       </dependency>

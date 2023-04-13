@@ -1,0 +1,100 @@
+package com.bc.template.common.results;
+
+import lombok.Data;
+
+import static com.bc.template.common.results.BaseStatusEnum.*;
+
+@Data
+public class ObjectResults<T> extends Results {
+
+    /**
+     * 返回的实体数据
+     */
+    T data;
+
+    //----------------------------我是一条漂亮的分割性---------------------------------
+
+    public ObjectResults() {
+
+    }
+
+    public ObjectResults(BaseStatusEnum statusEnum, T data) {
+        this.status = statusEnum.getStatus();
+        this.message = statusEnum.getMessage();
+        this.data = data;
+    }
+
+    public ObjectResults(BaseStatusEnum statusEnum, String message, T data) {
+        this.status = statusEnum.getStatus();
+        this.message = message;
+        this.data = data;
+    }
+
+    //----------------------------我是一条漂亮的分割性---------------------------------
+
+    /**
+     * 创建返回成功的ObjectResults 无数据
+     */
+    public static ObjectResults ok() {
+        return new ObjectResults<>(SUCCESS, SUCCESS.getMessage(), null);
+    }
+
+    /**
+     * 创建返回成功的ObjectResults 有数据
+     *
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> ObjectResults<T> ok(T data) {
+        return new ObjectResults<>(SUCCESS, SUCCESS.getMessage(), data);
+    }
+
+
+    //----------------------------我是一条漂亮的分割性---------------------------------
+
+    /**
+     * 创建返回系统异常的ObjectResults 无数据
+     */
+    public static ObjectResults createErrorResult() {
+        return createErrorResult(ERROR.getMessage());
+    }
+
+
+    /**
+     * 创建返回系统异常的ObjectResults 有数据 并自定义message
+     */
+    public static <T> ObjectResults<T> createErrorResult(String message) {
+        return new ObjectResults<>(ERROR, message, null);
+    }
+
+
+    //----------------------------我是一条漂亮的分割性---------------------------------
+
+    /**
+     * 创建返回业务异常的ObjectResults
+     */
+    public static ObjectResults createBizExceptionResult(String bizMessage) {
+        return new ObjectResults(BUSINESS_EXCEPTION, bizMessage);
+    }
+
+    /**
+     * 创建返回业务异常的ObjectResults 有数据 并自定义异常message
+     */
+    public static <T> ObjectResults<T> createBizExceptionResult(T data, Integer errorStatus, String message) {
+        ObjectResults<T> results = new ObjectResults<>(BUSINESS_EXCEPTION, message, data);
+        results.setErrorStatus(errorStatus);
+        return results;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ObjectResults{" +
+                "data=" + data +
+                ", status=" + status +
+                ", message='" + message + '\'' +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
+}

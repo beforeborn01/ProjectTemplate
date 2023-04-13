@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>ProjectTemplate</artifactId>
-    <groupId>com.youneng.troy</groupId>
+    <groupId>com.bc</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -15,19 +15,19 @@
 
     <!--项目自身的包依赖 -->
     <dependency>
-      <groupId>com.youneng.troy</groupId>
+      <groupId>com.bc</groupId>
       <artifactId>template-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.youneng.troy</groupId>
+      <groupId>com.bc</groupId>
       <artifactId>template-biz</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.youneng.troy</groupId>
+      <groupId>com.bc</groupId>
       <artifactId>template-service</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.youneng.troy</groupId>
+      <groupId>com.bc</groupId>
       <artifactId>template-common</artifactId>
     </dependency>
 
@@ -139,7 +139,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.youneng.troy.template.web.ApplicationStarter</mainClass>
+          <mainClass>com.bc.template.web.ApplicationStarter</mainClass>
         </configuration>
       </plugin>
     </plugins>
