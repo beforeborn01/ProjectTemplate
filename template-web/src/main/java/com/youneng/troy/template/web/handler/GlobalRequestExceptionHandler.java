@@ -1,13 +1,12 @@
 package com.youneng.troy.template.web.handler;
 
 import com.youneng.troy.template.common.exception.ProjectTemplateException;
+import com.youneng.troy.template.common.results.ObjectResults;
+import com.youneng.troy.template.common.results.Results;
 import com.youneng.troy.template.service.util.DingTalkAlertUtil;
 import com.youneng.troy.template.web.util.ContextEnv;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -32,6 +31,10 @@ public class GlobalRequestExceptionHandler {
 
     private static final int BIZ_EXCEPTION_CODE = 5001;
 
+    private static final String SYSTEM_ERROR_MSG = "系统异常 请稍后重试";
+
+    private static final String PARAM_INVALID = "参数校验异常";
+
     @Autowired
     private DingTalkAlertUtil dingTalkAlertUtil;
 
@@ -43,19 +46,19 @@ public class GlobalRequestExceptionHandler {
      */
     @ExceptionHandler(value = {ValidationException.class, ServletRequestBindingException.class, MethodArgumentTypeMismatchException.class, MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
     @ResponseBody
-    public ResponseEntity<String> paramsException(Exception e) {
+    public ObjectResults<String> paramsException(Exception e) {
         //返回400，表示错误的请求
-        BodyBuilder bodyBuilder = ResponseEntity.badRequest();
+        ObjectResults<String> result = ObjectResults.createErrorResult(PARAM_INVALID);
         if (e instanceof MethodArgumentNotValidException) {
             BindingResult bindingResult = ((MethodArgumentNotValidException) e).getBindingResult();
             FieldError fieldError = bindingResult.getFieldError();
             String desc = Optional.ofNullable(fieldError).map(f -> f.getField() + f.getDefaultMessage()).orElse("");
-            bodyBuilder.body(desc);
+            result.setDesc(desc);
         } else {
-            bodyBuilder.body(e.getMessage());
+            result.setMessage(e.getMessage());
         }
-        log.warn("paramsException", e);
-        return bodyBuilder.build();
+        log.warn(PARAM_INVALID, e);
+        return result;
     }
 
     /**
@@ -63,11 +66,10 @@ public class GlobalRequestExceptionHandler {
      */
     @ExceptionHandler(value = ProjectTemplateException.class)
     @ResponseBody
-    public ResponseEntity<String> templateException(ProjectTemplateException e) {
-        //返回自定义状态码5001，表示业务异常
-        BodyBuilder bodyBuilder = ResponseEntity.status(BIZ_EXCEPTION_CODE);
-        log.warn("templateException", e);
-        return bodyBuilder.body(e.getMessage());
+    public Results templateException(ProjectTemplateException e) {
+        Results results = ObjectResults.createErrorResult(e.getMessage());
+        log.warn("lionException", e);
+        return results;
     }
 
     /**
@@ -75,13 +77,12 @@ public class GlobalRequestExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public ResponseEntity<String> allException(HttpServletRequest req, Exception e) {
-        //返回自定义状态码5001，表示业务异常
-        BodyBuilder bodyBuilder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+    public Results allException(HttpServletRequest req, Exception e) {
+        Results results = ObjectResults.createErrorResult(SYSTEM_ERROR_MSG);
         Object urlObject = req.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         String customMessage = "URL : " + (urlObject == null ? req.getRequestURL() : urlObject);
         dingTalkAlertUtil.alert(e, ContextEnv.getUserEmail(), customMessage);
         log.error("systemException", e);
-        return bodyBuilder.body("{\"error\":\"系统异常，请稍后再试\"}");
+        return results;
     }
 }

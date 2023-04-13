@@ -1,5 +1,7 @@
 package com.youneng.troy.template.common.exception;
 
+import lombok.Data;
+
 /**
  * @author : sunjianzhi
  * @version V1.0
@@ -9,6 +11,7 @@ package com.youneng.troy.template.common.exception;
  * //codeRules 用于抛出需要提示用户的异常信息
  * @date Date : 2022年10月10日 17:14
  */
+@Data
 public class ProjectTemplateException extends RuntimeException {
 
     /**

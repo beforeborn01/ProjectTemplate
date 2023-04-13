@@ -10,10 +10,8 @@ public enum BaseStatusEnum {
     SUCCESS(1,"OK"),
 
     BUSINESS_EXCEPTION(2,"业务异常"),
+    ;
 
-    NO_SIGN_IN(3,"您还没登录"),
-
-    NO_PERMISSION(4,"未授权");
 
     private Integer status;
 

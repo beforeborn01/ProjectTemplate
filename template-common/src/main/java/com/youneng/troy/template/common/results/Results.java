@@ -4,11 +4,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/**
- * @author lishuai17
- * @create 2019-03-22 17:26
- * @desc
- **/
 @Data
 public abstract class Results implements Serializable {
 

@@ -73,7 +73,7 @@ public class DemoControllerWithRealMvcTest {
     public void should_get_invalid_param_exception(DemoParam demoParam) {
         HttpEntity<DemoParam> request = new HttpEntity<>(demoParam);
         ObjectResults<Void> response = restTemplate.postForObject("http://localhost:9915/template/api/demo/hello", request, ObjectResults.class);
-        assertEquals(BaseStatusEnum.ERROR, response.getStatus());
+        assertEquals(BaseStatusEnum.ERROR.getStatus(), response.getStatus());
     }
 
     public static Stream<Arguments> should_get_invalid_param_exception() {
@@ -81,26 +81,4 @@ public class DemoControllerWithRealMvcTest {
                 Arguments.of(Named.of("name invalid", new DemoParam(1L, "123456789101111", 1))),
                 Arguments.of(Named.of("age invalid", new DemoParam(1L, "zhangsan", 111))));
     }
-
-//    @Test
-//    public void should_get_invalid_param_id_exception() {
-//        HttpEntity<DemoParam> request = new HttpEntity<>(new DemoParam(null, null, 1));
-//        ObjectResults<Void> response = restTemplate.postForObject("http://localhost:9915/template/api/demo/hello", request, ObjectResults.class);
-//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatus());
-//    }
-//
-//    @Test
-//    public void should_get_invalid_param_name_exception() {
-//        HttpEntity<DemoParam> request = new HttpEntity<>(new DemoParam(1L, "123456789101111", 1));
-//        ResponseEntity<Void> response = restTemplate.postForEntity("http://localhost:9915/template/api/demo/hello", request, Void.class);
-//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void should_get_invalid_param_age_exception() {
-//        HttpEntity<DemoParam> request = new HttpEntity<>(new DemoParam(1L, "zhangsan", 111));
-//        ResponseEntity<Void> response = restTemplate.postForEntity("http://localhost:9915/template/api/demo/hello", request, Void.class);
-//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-//    }
-
 }

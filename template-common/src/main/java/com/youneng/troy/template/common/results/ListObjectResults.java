@@ -8,11 +8,6 @@ import static com.youneng.troy.template.common.results.BaseStatusEnum.BUSINESS_E
 import static com.youneng.troy.template.common.results.BaseStatusEnum.SUCCESS;
 
 
-/**
- * @author lishuai17
- * @create 2019-03-22 17:34
- * @desc
- **/
 @Data
 public class ListObjectResults<T> extends Results {
 

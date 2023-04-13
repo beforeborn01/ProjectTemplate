@@ -4,11 +4,6 @@ import lombok.Data;
 
 import static com.youneng.troy.template.common.results.BaseStatusEnum.*;
 
-/**
- * @author lishuai17
- * @create 2019-03-22 17:34
- * @desc
- **/
 @Data
 public class ObjectResults<T> extends Results {
 
@@ -62,15 +57,15 @@ public class ObjectResults<T> extends Results {
      * 创建返回系统异常的ObjectResults 无数据
      */
     public static ObjectResults createErrorResult() {
-        return createErrorResult(ERROR.getMessage(), null);
+        return createErrorResult(ERROR.getMessage());
     }
 
 
     /**
      * 创建返回系统异常的ObjectResults 有数据 并自定义message
      */
-    public static <T> ObjectResults<T> createErrorResult(String message, T data) {
-        return new ObjectResults<>(ERROR, message, data);
+    public static <T> ObjectResults<T> createErrorResult(String message) {
+        return new ObjectResults<>(ERROR, message, null);
     }
 
 
@@ -79,22 +74,14 @@ public class ObjectResults<T> extends Results {
     /**
      * 创建返回业务异常的ObjectResults
      */
-    public static ObjectResults createBizExceptionResult(String message) {
-        return createBusinessExceptionResult(BUSINESS_EXCEPTION.getStatus(), message);
-    }
-
-    /**
-     * 创建返回业务异常的ObjectResults
-     */
-    public static ObjectResults createBusinessExceptionResult(Integer errorStatus, String message) {
-        ObjectResults<Object> result = createBusinessExceptionResult(errorStatus, message);
-        return result;
+    public static ObjectResults createBizExceptionResult(String bizMessage) {
+        return new ObjectResults(BUSINESS_EXCEPTION, bizMessage);
     }
 
     /**
      * 创建返回业务异常的ObjectResults 有数据 并自定义异常message
      */
-    public static <T> ObjectResults<T> createBusinessExceptionResult(T data, Integer errorStatus, String message) {
+    public static <T> ObjectResults<T> createBizExceptionResult(T data, Integer errorStatus, String message) {
         ObjectResults<T> results = new ObjectResults<>(BUSINESS_EXCEPTION, message, data);
         results.setErrorStatus(errorStatus);
         return results;
