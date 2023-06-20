@@ -1,0 +1,13 @@
+# 使用java8的容器，运行ProjectTemplate服务
+version: '3'
+services:
+  ProjectTemplate:
+    image: java:8
+    container_name: ProjectTemplate
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ProjectTemplate:/ProjectTemplate
+    working_dir: /ProjectTemplate
+    command: java -jar ProjectTemplate.jar

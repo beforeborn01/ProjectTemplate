@@ -19,5 +19,21 @@
     </dependency>
     <!-- 依赖项目自身的包,请勿增删 end -->
 
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <!-- -->
+    <dependency>
+      <groupId>com.bc</groupId>
+      <artifactId>template-api</artifactId>
+    </dependency>
+
   </dependencies>
 </project>
