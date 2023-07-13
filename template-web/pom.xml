@@ -100,6 +100,10 @@
       <groupId>com.xdf.pscommon</groupId>
       <artifactId>base-filter-starter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.xdf.pscommon</groupId>
+      <artifactId>base-monitor-starter</artifactId>
+    </dependency>
 
     <!-- 其他三方框架依赖 -->
     <dependency>
