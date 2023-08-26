@@ -28,7 +28,7 @@ public class DataSourceConfig {
 
     public static final Logger logger = LogManager.getLogger(DataSourceConfig.class);
 
-    @Value("${mysql.tiger.mapperLocations}")
+    @Value("${mysql.template.mapperLocations}")
     private String mapperLocations;
 
     // 加载全局的配置文件

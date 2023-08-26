@@ -33,6 +33,10 @@
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+    </dependency>
   </dependencies>
 
 
