@@ -102,7 +102,7 @@
     </dependency>
     <dependency>
       <groupId>com.xdf.pscommon</groupId>
-      <artifactId>base-monitor-starter</artifactId>
+      <artifactId>base-monitor-core</artifactId>
     </dependency>
 
     <!-- 其他三方框架依赖 -->
