@@ -77,6 +77,9 @@ basealert:
 
 
 ## //todo 下面配置仅为本地环境使用，正式项目可能要删除以下配置
+tidb:
+  host: localhost
+  port: 3600
 jdbc:
   url: jdbc:mysql://localhost:3306/db?useSSL=false&allowMultiQueries=true
 redis:
@@ -85,7 +88,7 @@ redis:
 
 mysql:
   configLocation: classpath:mybatis-config.xml
-  tiger:
+  template:
     mapperLocations: classpath*:/mapper/**/*.xml
 seal:
   route:
@@ -97,12 +100,12 @@ seal:
         master: 'dataSource_preTest'
     data-source-config-map:
       masterDataSource:
-        url: ${jdbc.url}
+        url: jdbc:mysql://${tidb.host}:${tidb.port}/template?useSSL=false&allowMultiQueries=true
         username: root
         password: Admin123!
         driver-class-name: com.mysql.jdbc.Driver
       dataSource_preTest:
-        url: ${jdbc.url}
+        url: jdbc:mysql://${tidb.host}:${tidb.port}/template?useSSL=false&allowMultiQueries=true
         username: root
         password: Admin123!
         driver-class-name: com.mysql.jdbc.Driver

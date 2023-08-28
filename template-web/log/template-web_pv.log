@@ -1,0 +1,76 @@
+2023-08-28 15:17:30.256 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:17:30, type=pv_access, uri=, parameters=
+入参 ：[{"id":"1","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:17:30.406 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:17:30, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:20:11.660 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:20:11, type=pv_access, uri=, parameters=
+入参 ：[{"id":"1","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:20:11.771 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:20:11, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:21:54.885 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:21:54, type=pv_access, uri=, parameters=
+入参 ：[{"id":"1","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:21:55.045 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:21:55, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:23:34.016 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:23:34, type=pv_access, uri=, parameters=
+入参 ：[{"id":"1","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:23:34.139 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:23:34, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:23:36.581 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom=
+{}
+ 耗时：2440, project=template, time=2023-08-28 15:23:36, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}]
+ 返参： {"status":1,"errorStatus":null,"message":"OK","desc":null,"data":[{"id":"1","name":"zhangsan","age":30},{"id":"3","name":"zhangfei","age":50}]}, request_id=null}
+2023-08-28 15:23:36.584 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:23:36, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:23:36.593 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom=
+{}
+ 耗时：9, project=template, time=2023-08-28 15:23:36, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}]
+ 返参： {"status":1,"errorStatus":null,"message":"OK","desc":null,"data":[{"id":"1","name":"zhangsan","age":30},{"id":"3","name":"zhangfei","age":50}]}, request_id=null}
+2023-08-28 15:23:36.606 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:23:36, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}], request_id=null}
+2023-08-28 15:23:36.618 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom=
+{}
+ 耗时：12, project=template, time=2023-08-28 15:23:36, type=pv_access, uri=, parameters=
+入参 ：[{"id":"","nameKeyword":"zhang"}]
+ 返参： {"status":1,"errorStatus":null,"message":"OK","desc":null,"data":[{"id":"1","name":"zhangsan","age":30},{"id":"3","name":"zhangfei","age":50}]}, request_id=null}
+2023-08-28 15:23:36.634 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom= 
+{}, project=template, time=2023-08-28 15:23:36, type=pv_access, uri=, parameters=
+入参 ：[{"id":"1","nameKeyword":""}], request_id=null}
+2023-08-28 15:23:36.645 INFO  main com.xdf.pscommon.log4j2.interfaces.PVLogger TID:  - {uid=null, method=, custom=
+{}
+ 耗时：11, project=template, time=2023-08-28 15:23:36, type=pv_access, uri=, parameters=
+入参 ：[{"id":"1","nameKeyword":""}]
+ 返参： {"status":1,"errorStatus":null,"message":"OK","desc":null,"data":[{"id":"1","name":"zhangsan","age":30}]}, request_id=null}
+2023-08-28 15:23:41.115 INFO  XNIO-1 task-1 TID:  com.xdf.pscommon.log4j2.interfaces.PVLogger - {uid=null, method=POST, custom=
+{"Accept":"application/json, application/*+json","Connection":"keep-alive","User-Agent":"Java/1.8.0_241","Host":"localhost:9915","Content-Length":"36","Content-Type":"application/json"}
+ 耗时：1, project=template, time=2023-08-28 15:23:41, type=pv_access, uri=/template/api/demo/hello, parameters=
+入参 ：[]
+ 返参： {"status":0,"errorStatus":null,"message":"参数校验异常","desc":"age最大不能超过100","data":null}, request_id=null}
+2023-08-28 15:23:41.174 INFO  XNIO-1 task-1 TID:  com.xdf.pscommon.log4j2.interfaces.PVLogger - {uid=null, method=POST, custom=
+{"Accept":"application/json, application/*+json","Connection":"keep-alive","User-Agent":"Java/1.8.0_241","Host":"localhost:9915","Content-Length":"41","Content-Type":"application/json"}
+ 耗时：1, project=template, time=2023-08-28 15:23:41, type=pv_access, uri=/template/api/demo/hello, parameters=
+入参 ：[]
+ 返参： {"status":0,"errorStatus":null,"message":"参数校验异常","desc":"name长度需要在1和10之间","data":null}, request_id=null}
+2023-08-28 15:23:41.201 INFO  XNIO-1 task-1 TID:  com.xdf.pscommon.log4j2.interfaces.PVLogger - {uid=null, method=POST, custom= 
+{"Accept":"application/json, application/*+json","Connection":"keep-alive","User-Agent":"Java/1.8.0_241","Host":"localhost:9915","Content-Length":"29","Content-Type":"application/json"}, project=template, time=2023-08-28 15:23:41, type=pv_access, uri=/template/api/demo/get/user, parameters=
+入参 ：[{"id":"1","nameKeyword":null}], request_id=null}
+2023-08-28 15:23:41.262 INFO  XNIO-1 task-1 TID:  com.xdf.pscommon.log4j2.interfaces.PVLogger - {uid=null, method=POST, custom=
+{"Accept":"application/json, application/*+json","Connection":"keep-alive","User-Agent":"Java/1.8.0_241","Host":"localhost:9915","Content-Length":"29","Content-Type":"application/json"}
+ 耗时：60, project=template, time=2023-08-28 15:23:41, type=pv_access, uri=/template/api/demo/get/user, parameters=
+入参 ：[{"id":"1","nameKeyword":null}]
+ 返参： {"status":1,"errorStatus":null,"message":"OK","desc":null,"data":[{"id":"1","name":"zhangsan","age":30}]}, request_id=null}
+2023-08-28 15:23:41.288 INFO  XNIO-1 task-1 TID:  com.xdf.pscommon.log4j2.interfaces.PVLogger - {uid=null, method=POST, custom=
+{"Accept":"application/json, application/*+json","Connection":"keep-alive","User-Agent":"Java/1.8.0_241","Host":"localhost:9915","Content-Length":"31","Content-Type":"application/json"}
+ 耗时：1, project=template, time=2023-08-28 15:23:41, type=pv_access, uri=/template/api/demo/hello, parameters=
+入参 ：[]
+ 返参： {"status":0,"errorStatus":null,"message":"参数校验异常","desc":"id不能为null","data":null}, request_id=null}
