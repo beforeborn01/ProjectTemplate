@@ -20,6 +20,8 @@ spring:
         server-addr: http://nacostest.test.xdf.cn
         file-extension: yaml
         namespace: troy
+        username: younengA
+        password: younengA.8899
         extension-configs[0]:
           data-id: application-${spring.cloud.config.profile}.yaml
           group: ${spring.cloud.config.profile}
