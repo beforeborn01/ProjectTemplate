@@ -27,7 +27,4 @@ public class PageInfo<T> {
      */
     private Integer total;
 
-    public static <T> PageInfo.PageInfoBuilder<T> builder(Class<T> clazz) {
-        return new PageInfo.PageInfoBuilder<T>();
-    }
 }
