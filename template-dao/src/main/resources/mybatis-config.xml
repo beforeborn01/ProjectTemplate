@@ -9,7 +9,7 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="useGeneratedKeys" value="true"/>
         <setting name="defaultExecutorType" value="SIMPLE"/>
-        <setting name="defaultStatementTimeout" value="25000"/>
+        <setting name="defaultStatementTimeout" value="10"/>
         <!--配置-->
     </settings>
     <typeAliases>
