@@ -1,20 +1,10 @@
-#consul、nacos配置中心 相关配置
+#nacos配置中心和服务发现 相关配置
 spring:
   application:
     name: template
   cloud:
     config:
       profile: dev
-    consul:
-      host: 127.0.0.1
-      port: 8500
-      discovery:
-        service-name: ${spring.application.name}
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
-        prefer-ip-address: true
-        health-check-path: /actuator/health
-        health-check-interval: 10s
-        query-passing: true
     nacos:
       config:
         server-addr: http://127.0.0.1:8848
@@ -28,6 +18,17 @@ spring:
           data-id: ${spring.application.name}-${spring.cloud.config.profile}.yaml
           group: ${spring.cloud.config.profile}
           refresh: true
+      discovery:
+        server-addr: http://127.0.0.1:8848
+        namespace: troy
+        service: ${spring.application.name}
+        group: ${spring.cloud.config.profile}
+        cluster-name: DEFAULT
+        metadata:
+          version: 1.0
+        heart-beat-interval: 5000
+        heart-beat-timeout: 15000
+        ip-delete-timeout: 30000
 
 
 ########################
