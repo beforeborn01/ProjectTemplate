@@ -12,7 +12,7 @@ public class RedisContainerBase implements BeforeAllCallback {
     @Override
     public void beforeAll(ExtensionContext context) {
         if (redis == null) {
-            redis = new GenericContainer<>(DockerImageName.parse("redis:5.0.3-alpine")).withExposedPorts(6379);
+            redis = new GenericContainer<>(DockerImageName.parse("redis:7.4-alpine")).withExposedPorts(6379);
             redis.start();
             System.setProperty("redis.host", redis.getHost());
             System.setProperty("redis.port", redis.getMappedPort(6379).toString());

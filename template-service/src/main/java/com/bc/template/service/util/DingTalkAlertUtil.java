@@ -20,7 +20,7 @@ import java.time.Instant;
 @Slf4j
 public class DingTalkAlertUtil {
 
-    @Value("${spring.cloud.config.profile}")
+    @Value("${spring.cloud.config.profile:dev}")
     private String ENV;
     @Value("${basealert.dingtalk.enable:true}")
     private boolean dingTalkEnable;

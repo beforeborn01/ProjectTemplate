@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * @date Date : 2022年12月08日 10:59
  */
 //注意必须指定webEnvironment，才能真正启动web容器
-@SpringBootTest(classes = ApplicationStarter.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = ApplicationStarter.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = {"spring.profiles.active=test"})
 @ExtendWith({MysqlContainerBase.class, RedisContainerBase.class}) // 表明依赖的测试套件
 //@DirtiesContext // 配置后则会启动一个新的spring容器
 public class DemoControllerWithRealMvcTest {
