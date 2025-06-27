@@ -10,14 +10,13 @@ spring:
         server-addr: http://127.0.0.1:8848
         file-extension: yaml
         namespace: troy
-        ext-config[0]:
-          data-id: application-${spring.cloud.config.profile}.yaml
-          group: ${spring.cloud.config.profile}
-          refresh: true
-        ext-config[1]:
-          data-id: ${spring.application.name}-${spring.cloud.config.profile}.yaml
-          group: ${spring.cloud.config.profile}
-          refresh: true
+        extension-configs:
+          - data-id: application-${spring.cloud.config.profile}.yaml
+            group: ${spring.cloud.config.profile}
+            refresh: true
+          - data-id: ${spring.application.name}-${spring.cloud.config.profile}.yaml
+            group: ${spring.cloud.config.profile}
+            refresh: true
       discovery:
         server-addr: http://127.0.0.1:8848
         namespace: troy
@@ -101,18 +100,18 @@ seal:
         url: ${jdbc.url}
         username: root
         password: Admin123!
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
       dataSource_preTest:
         url: ${jdbc.url}
         username: root
         password: Admin123!
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
 db:
   druid:
     url: ${jdbc.url}
     username: ${jdbc.username}
     password: ${jdbc.password}
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 # jetcache 缓存配置 示例
 jetcache:

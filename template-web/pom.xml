@@ -41,6 +41,11 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- AspectJ依赖 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
     <!-- spring框架依赖 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -97,6 +102,11 @@
           <groupId>com.alibaba</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <!-- Spring Cloud Bootstrap支持 -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-bootstrap</artifactId>
     </dependency>
 
     <!-- 其他三方框架依赖 -->

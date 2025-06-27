@@ -1,7 +1,7 @@
 package com.bc.template.biz.scheduler;
 
 import com.bc.template.service.util.DingTalkAlertUtil;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
