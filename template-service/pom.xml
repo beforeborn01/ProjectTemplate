@@ -31,11 +31,10 @@
     </dependency>
 
     <!-- 其他第三方依赖 -->
-    <dependency>
-      <groupId>com.dingtalk.open</groupId>
-      <artifactId>taobao-sdk-java-auto</artifactId>
-      <version>1479188381469-20210112</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.dingtalk.open</groupId>-->
+<!--      <artifactId>taobao-sdk-java-auto</artifactId>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.apache.skywalking</groupId>
       <artifactId>apm-toolkit-trace</artifactId>

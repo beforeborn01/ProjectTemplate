@@ -17,7 +17,7 @@ spring:
         query-passing: true
     nacos:
       config:
-        server-addr: http://172.29.64.28:8848
+        server-addr: http://127.0.0.1:8848
         file-extension: yaml
         namespace: troy
         ext-config[0]:
