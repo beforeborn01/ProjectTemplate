@@ -1,0 +1,150 @@
+---
+globs: *.java
+alwaysApply: false
+description: Java 命名规范和各层示例，规定了包、类、接口等的命名风格和示例代码
+---
+# Java 包命名和类命名规则
+
+## 包命名规则
+- 所有包名以 `com.bc.@appName` 为根包名,其中@appName为项目bootstrap.yml文件中定义的spring.application.name
+- 按模块和功能进行分层，例如：`com.bc.@appName.模块名.功能分类`
+
+## 隔层接口定义时的命名规范
+web层 ：入参 xxxxxParam，出参xxxxxVO
+api层： 入参 xxxxxReq，出参xxxxxResp
+biz层 ：入参 xxxxxBO，出参 xxxxxDTO
+service层 ：入参 xxxxxBO， 出参 xxxxxDTO
+client层:   入参 xxxxxBO， 出参 xxxxxDTO
+dao层 ：入参：DO 出参：PO
+
+## 各层示例如下：
+### web层
+- 控制器类: `DemoController` - 处理HTTP请求，进行权限验证，参数转换等
+- 参数类: `UserGetParam` - web层的请求参数对象，用于接收和校验前端传入的数据
+- 视图类: `UserVO` - 返回给前端的视图对象，只包含需要展示给用户的数据
+示例代码如下：
+@Validated
+@RestController
+@RequestMapping("template/api/demo")
+public class DemoController {
+
+    @Autowired
+    private DemoBiz demoBiz;
+
+    @PostMapping("/get/user/bycache")
+    @Cached(name = "cache:ProjectTemplate:DemoController:getUserByCache:")
+    public ListObjectResults<UserVO> getUserByCache(@Validated @RequestBody UserGetParam userGetParam) {
+        UserGetBO userGetBO = BeanUtil.toBean(userGetParam, UserGetBO.class);
+        List<UserDTO> userDTOS = demoBiz.getUserByConditionByCache(userGetBO);
+        return ListObjectResults.ok(BeanUtil.copyToList(userDTOS, UserVO.class));
+    }
+}
+
+### api层
+- 接口类: `DemoApi` - 定义对外提供的RPC服务接口，通常通过Feign调用
+- 请求类: `DemoReq` - API调用的请求参数对象
+- 响应类: `DemoResp` - API调用的响应结果对象
+示例代码如下：
+@FeignClient(value = "template", path = "/template/feign/api/demo")
+public interface DemoApi {
+
+    /**
+     * 示例接口
+     */
+    @PostMapping("/get/user/cache")
+    ResponseEntity<ListObjectResults<DemoResp>> getUserByCache(@Validated @RequestBody DemoReq demoReq);
+}
+
+### biz层
+- 业务类: `DemoBiz` - 实现核心业务逻辑，包含业务规则判断和流程编排
+- 业务对象: `UserGetBO` - 业务层的参数对象，包含业务处理所需的数据
+- 结果处理: 通常返回 `UserDTO` 对象，来自service层
+示例代码如下：
+@Service
+public class DemoBiz {
+    @Autowired
+    private DemoService demoService;
+
+    public List<UserDTO> getUserByConditionByCache(UserGetBO userGetBO) {
+        try {
+            Thread.sleep(2000); // 模拟耗时操作
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return this.getUserByCondition(userGetBO);
+    }
+    
+    public List<UserDTO> getUserByCondition(UserGetBO userGetBO) {
+        // 业务规则判断
+        String id = userGetBO.getId();
+        String nameKeyword = userGetBO.getNameKeyword();
+        if (StringUtils.isNotBlank(id) && StringUtils.isNotBlank(nameKeyword)) {
+            throw new ProjectTemplateException("id和name不能同时指定");
+        }
+        // 根据不同的参数调用不同的service方法
+        if (StringUtils.isNotBlank(id)) {
+            return Collections.singletonList(demoService.getUserById(id));
+        }
+        if (StringUtils.isNotBlank(nameKeyword)) {
+            return demoService.getUsersByName(nameKeyword);
+        }
+        return null;
+    }
+}
+
+### service层
+- 服务类: `DemoService` - 提供业务可复用的服务，如数据库操作，远程调用等
+- 数据传输: `UserDTO` - 服务层数据传输对象，在不同服务层之间传递数据
+示例代码如下：
+@Service
+public class DemoService {
+
+    @Autowired
+    private DemoMapper demoMapper;
+
+    public UserDTO getUserById(String id) {
+        return BeanUtil.toBean(demoMapper.findById(id), UserDTO.class);
+    }
+
+    public List<UserDTO> getUsersByName(String nameKeyword) {
+        return BeanUtil.copyToList(demoMapper.findUsersByName(nameKeyword), UserDTO.class);
+    }
+}
+
+### client层
+- 客户端类: `DemoClient` - 封装对远程服务的调用，隐藏调用细节
+- 调用方式: 通常通过注入Api接口实现，如 `DemoApi`
+示例代码如下：
+public class DemoClient {
+
+    @Autowired
+    private DemoApi demoApi;
+
+    public List<DemoResp> getUserByCache(UserGetBO userGetBO) {
+        DemoReq demoReq = BeanUtil.toBean(userGetBO, DemoReq.class);
+        ResponseEntity<ListObjectResults<DemoResp>> response = demoApi.getUserByCache(demoReq);
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            return response.getBody().getData();
+        }
+        return Collections.emptyList();
+    }
+}
+
+### dao层
+- 映射器: `DemoMapper` - MyBatis接口，定义SQL操作方法
+- 持久对象: `UserPO` - 与数据库表结构对应的实体类，用于ORM映射
+示例代码如下：
+@Repository
+public interface DemoMapper {
+
+    UserPO findById(String id);
+
+    List<UserPO> findUsersByName(String nameKeyword);
+}
+
+@Data
+public class UserPO {
+    private String id;
+    private String name;
+    private Integer age;
+}

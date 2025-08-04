@@ -1,0 +1,258 @@
+---
+globs: */src/**/*.java
+alwaysApply: false
+description: 功能演进规范，包括需求迭代方法、代码重构原则、兼容性保障和测试策略
+---
+# 功能演进规范
+
+## 1. 变更分析流程
+
+### 1.1 影响范围评估
+1. **依赖分析**：识别受影响的模块、类和方法
+2. **调用链分析**：确定上下游功能影响
+3. **数据流分析**：评估数据结构和数据流变化
+4. **风险评级**：对变更进行风险等级划分（低/中/高）
+
+### 1.2 变更方案设计
+1. **制定多个可选方案**：提出1-3种实现方案，不是必须多余1种，如果有你认为最优的，直接给出这1种即可
+2. **权衡利弊**：分析各方案的优缺点，包括性能、可维护性、兼容性等
+3. **明确技术债**：识别方案中的技术债务，制定后续偿还计划
+4. **确定最终方案**：选择最适合的方案并记录决策理由
+
+## 2. 代码重构原则
+
+### 2.1 重构时机
+1. **渐进式重构**：配合功能开发同步进行小规模重构
+2. **专项重构**：针对特定问题的集中重构
+3. **预防式重构**：在代码异味出现初期进行
+
+### 2.2 重构策略
+1. **单一责任**：确保每个类和方法只有一个变更的理由
+2. **提取共性**：将重复代码抽取为共用方法或类
+3. **优化设计模式**：引入或优化合适的设计模式
+4. **改善命名**：使名称更准确地反映意图
+5. **控制复杂度**：拆分复杂方法，降低圈复杂度（建议 < 15）
+
+### 2.3 测试驱动重构
+1. **先写测试**：对要重构的功能先编写或完善测试用例，确保100%覆盖
+2. **明确功能点**：在测试类注释中记录功能描述和验收标准
+3. **红-绿-重构流程**：
+   - **红**：验证现有测试可正常运行（验证测试有效性）
+   - **绿**：保持测试通过的情况下进行代码重构
+   - **重构**：在不改变外部行为的前提下优化内部结构
+4. **场景验证**：针对每个场景确保重构前后行为一致
+5. **渐进式实施**：一次重构一个小功能点，保持可控
+6. **持续集成**：每完成一个小步骤就提交并验证
+
+### 2.4 重构安全措施
+1. **小步提交**：频繁小批量提交代码
+2. **测试保障**：确保完整的测试覆盖
+3. **行为不变**：重构不应改变外部可观察行为
+4. **评审确认**：重要重构需进行代码评审
+
+## 3. 功能扩展方法
+
+### 3.1 代码复用原则
+1. **复用检查**：在新增函数前，必须先检索系统中是否存在可完成相同或类似功能的代码
+2. **复用评估**：评估现有代码的复用可能性，考虑：
+   - 功能契合度：现有代码是否完全满足需求
+   - 扩展难度：修改现有代码的复杂度
+   - 耦合风险：复用可能引入的依赖和风险
+3. **复用决策**：
+   - 直接复用：直接调用现有代码
+   - 包装复用：对现有代码进行轻量级封装后复用
+   - 部分复用：提取现有代码中的部分逻辑复用
+   - 不复用：当且仅当有明确理由时才实现新函数
+4. **不复用理由**：如决定不复用，必须记录具体原因，如：
+   - 现有实现与新需求有本质差异（详细说明差异）
+   - 现有实现有重大缺陷（列出缺陷）
+   - 复用会导致过度耦合（分析耦合影响）
+5. **复用记录**：在代码注释中记录复用决策和引用的原代码位置
+
+### 3.2 扩展设计原则
+1. **开闭原则**：对扩展开放，对修改关闭
+2. **最少知识**：新功能与现有代码的耦合应最小化
+3. **接口稳定**：尽量不改变公共接口定义
+4. **功能内聚**：相关功能应内聚在一起
+
+### 3.3 扩展实现模式
+1. **继承扩展**：创建子类实现新功能（适用于预留的扩展点）
+2. **组合扩展**：通过组合现有组件实现新功能
+3. **接口扩展**：添加新接口方法（需考虑兼容性）
+4. **配置扩展**：通过配置启用或调整功能
+5. **插件扩展**：实现预定义的扩展点接口
+
+### 3.4 功能开关策略
+1. **渐进发布**：使用功能开关控制新功能的发布
+2. **A/B测试**：支持同时运行多个功能版本
+3. **降级机制**：出现问题时能快速回退
+
+## 4. 兼容性保障
+
+### 4.1 接口兼容性
+1. **版本策略**：采用语义化版本控制
+2. **接口废弃**：使用 `@Deprecated` 标记而非直接删除
+3. **接口演进**：添加新方法而非修改现有方法
+4. **兼容适配**：提供适配层处理版本差异
+
+### 4.2 数据兼容性
+1. **数据迁移**：制定数据迁移方案和回滚策略
+2. **双写双读**：在过渡期同时支持新旧数据结构
+3. **默认值处理**：为新增字段提供合理默认值
+4. **容错处理**：对缺失或格式变化的数据优雅处理
+
+### 4.3 行为兼容性
+1. **结果一致性**：保持功能核心行为不变
+2. **异常处理**：保持异常抛出行为的一致性
+3. **性能预期**：避免显著的性能退化
+4. **依赖管理**：控制第三方依赖升级的影响
+
+## 5. 测试策略
+
+### 5.1 变更测试重点
+1. **回归测试**：确保现有功能不受影响
+2. **边界测试**：重点测试变更部分的边界条件
+3. **异常测试**：验证异常流程的处理
+4. **性能测试**：评估变更对性能的影响
+
+### 5.2 测试用例更新
+1. **同步更新**：与代码变更同步更新测试用例
+2. **测试重构**：优化测试代码结构，避免测试代码腐化
+3. **场景扩展**：为新功能添加完整测试场景
+4. **代码覆盖**：保持或提高代码覆盖率（建议 > 80%）
+
+## 6. 文档更新规范
+
+### 6.1 代码注释更新
+1. **类注释**：更新类的整体功能描述
+2. **方法注释**：更新方法的行为、参数和返回值描述
+3. **重要算法**：记录关键算法的变更
+4. **特殊处理**：标注特殊场景和边界条件处理
+
+### 6.2 项目文档更新
+1. **设计文档**：更新架构设计和模块设计文档
+2. **接口文档**：更新API文档和参数说明
+3. **变更日志**：记录功能变更历史
+4. **使用指南**：更新用户使用指南
+
+## 7. 功能迭代实例
+
+### 7.1 需求迭代示例
+```
+原始需求：用户注册功能，仅支持用户名和密码注册
+迭代需求：增加手机号验证码注册方式
+
+变更分析：
+1. 影响范围：用户服务、注册流程、数据库表结构
+2. 主要风险：数据结构变更，需确保兼容已注册用户
+3. 兼容策略：添加新字段，保持原有字段不变
+
+实现方案：
+1. 扩展用户表，添加手机号和验证状态字段
+2. 采用策略模式处理不同的注册方式
+3. 注册接口添加类型参数，区分不同注册方式
+```
+
+### 7.2 代码演进示例
+
+**原始代码:**
+```java
+public class UserService {
+    public User register(String username, String password) {
+        // 验证用户名、密码
+        validateUsername(username);
+        validatePassword(password);
+        
+        // 创建用户
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(encryptPassword(password));
+        
+        // 保存用户
+        userRepository.save(user);
+        return user;
+    }
+}
+```
+
+**重构后代码:**
+```java
+public class UserService {
+    private Map<RegisterType, RegisterStrategy> registerStrategies;
+    
+    // 构造函数注入策略
+    public UserService(List<RegisterStrategy> strategies) {
+        this.registerStrategies = strategies.stream()
+            .collect(Collectors.toMap(RegisterStrategy::getType, s -> s));
+    }
+    
+    public User register(RegisterRequest request) {
+        // 根据注册类型选择策略
+        RegisterType type = request.getType();
+        RegisterStrategy strategy = registerStrategies.get(type);
+        
+        if (strategy == null) {
+            throw new IllegalArgumentException("不支持的注册方式: " + type);
+        }
+        
+        // 使用策略处理注册逻辑
+        return strategy.register(request);
+    }
+}
+
+// 注册策略接口
+public interface RegisterStrategy {
+    RegisterType getType();
+    User register(RegisterRequest request);
+}
+
+// 用户名密码注册策略
+public class UsernamePasswordRegisterStrategy implements RegisterStrategy {
+    @Override
+    public RegisterType getType() {
+        return RegisterType.USERNAME_PASSWORD;
+    }
+    
+    @Override
+    public User register(RegisterRequest request) {
+        String username = request.getUsername();
+        String password = request.getPassword();
+        
+        // 原有的注册逻辑
+        validateUsername(username);
+        validatePassword(password);
+        
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(encryptPassword(password));
+        
+        userRepository.save(user);
+        return user;
+    }
+}
+
+// 手机号注册策略
+public class PhoneRegisterStrategy implements RegisterStrategy {
+    @Override
+    public RegisterType getType() {
+        return RegisterType.PHONE;
+    }
+    
+    @Override
+    public User register(RegisterRequest request) {
+        String phone = request.getPhone();
+        String code = request.getVerificationCode();
+        
+        // 手机注册特有的逻辑
+        validatePhone(phone);
+        verifyCode(phone, code);
+        
+        User user = new User();
+        user.setPhone(phone);
+        user.setPhoneVerified(true);
+        
+        userRepository.save(user);
+        return user;
+    }
+}
+```
