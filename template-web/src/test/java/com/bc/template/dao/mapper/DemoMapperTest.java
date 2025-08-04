@@ -22,7 +22,7 @@ import com.bc.template.web.ApplicationStarter;
  * @Description:
  * @date Date : 2022年11月16日 15:05
  */
-@SpringBootTest(classes = ApplicationStarter.class)
+@SpringBootTest(classes = ApplicationStarter.class, properties = {"spring.profiles.active=test"})
 @ExtendWith({MysqlContainerBase.class}) // 表明依赖的测试套件,可以是多个
 public class DemoMapperTest {
 

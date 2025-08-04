@@ -1,0 +1,101 @@
+# Test configuration to override production settings
+spring:
+  application:
+    name: template
+  cloud:
+    # Disable Nacos for tests
+    nacos:
+      config:
+        enabled: false
+      discovery:
+        enabled: false
+    config:
+      enabled: false
+    # Disable Spring Cloud compatibility verifier for tests
+    compatibility-verifier:
+      enabled: false
+  # Use H2 in-memory database for tests if needed, but we'll use testcontainers
+  datasource:
+    url: ${jdbc.url}
+    username: ${jdbc.username}
+    password: ${jdbc.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# Override database configuration for tests
+jdbc:
+  url: ${jdbc.url:jdbc:mysql://localhost:3306/demo?useSSL=false&allowMultiQueries=true}
+  username: ${jdbc.username:admin}
+  password: ${jdbc.password:admin}
+
+# Override Redis configuration for tests  
+redis:
+  host: ${redis.host:127.0.0.1}
+  port: ${redis.port:6379}
+
+# Web server configuration for tests
+server:
+  port: 9915
+
+# Database configuration for tests
+mysql:
+  configLocation: classpath:mybatis-config.xml
+  tiger:
+    mapperLocations: classpath*:/mapper/**/*.xml
+
+seal:
+  route:
+    enable: true
+    data-source-map:
+      normal:
+        master: 'masterDataSource'
+    data-source-config-map:
+      masterDataSource:
+        url: ${jdbc.url}
+        username: ${jdbc.username}
+        password: ${jdbc.password}
+        driver-class-name: com.mysql.cj.jdbc.Driver
+
+db:
+  druid:
+    url: ${jdbc.url}
+    username: ${jdbc.username}
+    password: ${jdbc.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# JetCache configuration for tests
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  local:
+    default:
+      type: linkedhashmap
+      keyConvertor: jackson
+      limit: 500
+      expireAfterWriteInMillis: 600000
+  remote:
+    default:
+      type: redis
+      keyConvertor: jackson
+      valueEncoder: java
+      valueDecoder: java
+      expireAfterWriteInMillis: 600000
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${redis.host}
+      port: ${redis.port}
+      database: 13
+
+# Disable DingTalk alerts for tests
+basealert:
+  dingtalk:
+    enable: false
+
+# Logging configuration for tests
+logging:
+  level:
+    com.bc.template.dao.mapper: DEBUG
+    org.springframework.cloud.config: WARN
+    org.springframework.cloud.context: WARN
+    com.alibaba.nacos: WARN

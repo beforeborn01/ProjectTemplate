@@ -103,11 +103,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- Spring Cloud Bootstrap支持 -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-bootstrap</artifactId>
-    </dependency>
+    <!-- Spring Cloud Bootstrap支持 - Spring Boot 3.x中已内置，无需单独依赖 -->
 
     <!-- 其他三方框架依赖 -->
     <dependency>

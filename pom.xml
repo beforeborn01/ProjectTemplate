@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>3.2.6</version>
+    <version>3.4.1</version>
     <relativePath/>
   </parent>
 
@@ -27,6 +27,7 @@
   </modules>
 
   <properties>
+    <revision>1.0-SNAPSHOT</revision>
     <api-version>1.0-SNAPSHOT</api-version>
     <web-version>1.0-SNAPSHOT</web-version>
     <biz-version>1.0-SNAPSHOT</biz-version>
@@ -43,12 +44,12 @@
 
     <!-- Spring cloud Settings -->
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
-    <spring-cloud.version>2023.0.2</spring-cloud.version>
+    <spring-cloud.version>2023.0.6</spring-cloud.version>
     <spring-cloud-nacos.version>2023.0.1.0</spring-cloud-nacos.version>
     <druid.version>1.2.23</druid.version>
     <mybatis.version>3.5.6</mybatis.version>
-    <mysql-connector-j.version>8.4.0</mysql-connector-j.version>
-    <lombok.version>1.18.32</lombok.version>
+    <mysql-connector-j.version>9.1.0</mysql-connector-j.version>
+    <lombok.version>1.18.36</lombok.version>
     <dingding-version>0.1.7-SNAPSHOT</dingding-version>
   </properties>
 
@@ -95,7 +96,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.12.0</version>
+        <version>3.17.0</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -105,12 +106,12 @@
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-core</artifactId>
-        <version>5.8.11</version>
+        <version>5.8.32</version>
       </dependency>
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-all</artifactId>
-        <version>5.8.11</version>
+        <version>5.8.32</version>
       </dependency>
 
       <!-- 单测依赖 -->
@@ -118,37 +119,37 @@
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter</artifactId>
-        <version>5.10.2</version>
+        <version>5.11.4</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-api</artifactId>
-        <version>5.10.2</version>
+        <version>5.11.4</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-params</artifactId>
-        <version>5.10.2</version>
+        <version>5.11.4</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.10.2</version>
+        <version>5.11.4</version>
         <scope>runtime</scope>
       </dependency>
       <dependency>
         <groupId>org.junit.vintage</groupId>
         <artifactId>junit-vintage-engine</artifactId>
-        <version>5.10.2</version>
+        <version>5.11.4</version>
         <scope>runtime</scope>
       </dependency>
       <dependency>
         <groupId>org.junit.platform</groupId>
         <artifactId>junit-platform-commons</artifactId>
-        <version>1.10.2</version>
+        <version>1.11.4</version>
         <scope>test</scope>
       </dependency>
 
@@ -156,19 +157,19 @@
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers</artifactId>
-        <version>1.19.8</version>
+        <version>1.20.4</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>junit-jupiter</artifactId>
-        <version>1.19.8</version>
+        <version>1.20.4</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>mysql</artifactId>
-        <version>1.19.8</version>
+        <version>1.20.4</version>
         <scope>test</scope>
       </dependency>
 
