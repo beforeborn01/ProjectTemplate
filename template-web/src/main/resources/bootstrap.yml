@@ -2,6 +2,9 @@
 spring:
   application:
     name: template
+  # 优雅停机配置
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
   cloud:
     config:
       profile: dev
@@ -37,16 +40,20 @@ management:
   endpoints:
     web:
       exposure:
-        include: 'prometheus,health' #暴露prometheus端点、health端点，其他隐藏
+        include: 'prometheus,health,info' #暴露prometheus、health、info端点
   endpoint:
     health:
-      show-details: NEVER
+      show-details: WHEN_AUTHORIZED
+      probes:
+        enabled: true  # 启用 K8s 探针: /actuator/health/liveness, /actuator/health/readiness
   health:
     defaults:
-      enabled: false
+      enabled: true
+
 # web服务端口号
 server:
   port: 9915
+  shutdown: graceful  # 优雅停机，配合K8s preStop hook
 
 # log配置
 logging:

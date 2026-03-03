@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>3.4.1</version>
+    <version>3.5.11</version>
     <relativePath/>
   </parent>
 
@@ -43,13 +43,18 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- Spring cloud Settings -->
-    <mybatis-spring.version>3.0.3</mybatis-spring.version>
-    <spring-cloud.version>2023.0.6</spring-cloud.version>
-    <spring-cloud-nacos.version>2023.0.1.0</spring-cloud-nacos.version>
-    <druid.version>1.2.23</druid.version>
-    <mybatis.version>3.5.6</mybatis.version>
-    <mysql-connector-j.version>9.1.0</mysql-connector-j.version>
+    <mybatis-spring.version>3.0.4</mybatis-spring.version>
+    <spring-cloud.version>2025.0.0</spring-cloud.version>
+    <spring-cloud-nacos.version>2025.0.0.0</spring-cloud-nacos.version>
+    <druid.version>1.2.27</druid.version>
+    <mybatis.version>3.5.19</mybatis.version>
+    <mysql-connector-j.version>9.6.0</mysql-connector-j.version>
     <lombok.version>1.18.36</lombok.version>
+    <testcontainers.version>1.21.4</testcontainers.version>
+    <jetcache.version>2.7.8</jetcache.version>
+
+    <skywalking.version>9.6.0</skywalking.version>
+    <ttl.version>2.14.5</ttl.version>
     <dingding-version>0.1.7-SNAPSHOT</dingding-version>
   </properties>
 
@@ -114,62 +119,23 @@
         <version>5.8.32</version>
       </dependency>
 
-      <!-- 单测依赖 -->
-      <!-- 显示指定junit-jupiter-xx的版本，解决和test-starter中版本冲突问题 -->
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <version>5.11.4</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>5.11.4</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-params</artifactId>
-        <version>5.11.4</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.11.4</version>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.vintage</groupId>
-        <artifactId>junit-vintage-engine</artifactId>
-        <version>5.11.4</version>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.platform</groupId>
-        <artifactId>junit-platform-commons</artifactId>
-        <version>1.11.4</version>
-        <scope>test</scope>
-      </dependency>
-
 
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers</artifactId>
-        <version>1.20.4</version>
+        <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>junit-jupiter</artifactId>
-        <version>1.20.4</version>
+        <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>mysql</artifactId>
-        <version>1.20.4</version>
+        <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
 
@@ -223,17 +189,13 @@
       <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>transmittable-thread-local</artifactId>
-        <version>2.11.5</version>
+        <version>${ttl.version}</version>
       </dependency>
-      <dependency>
-        <groupId>com.github.pagehelper</groupId>
-        <artifactId>pagehelper-spring-boot-starter</artifactId>
-        <version>2.1.0</version>
-      </dependency>
+
       <dependency>
         <groupId>com.alicp.jetcache</groupId>
         <artifactId>jetcache-starter-redis</artifactId>
-        <version>2.7.5</version>
+        <version>${jetcache.version}</version>
       </dependency>
 
 <!--      <dependency>-->
@@ -244,7 +206,7 @@
       <dependency>
         <groupId>org.apache.skywalking</groupId>
         <artifactId>apm-toolkit-trace</artifactId>
-        <version>8.0.0</version>
+        <version>${skywalking.version}</version>
       </dependency>
 
     </dependencies>

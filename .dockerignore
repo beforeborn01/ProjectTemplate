@@ -1,0 +1,29 @@
+# IDE
+.idea/
+.vscode/
+.cursor/
+.claude/
+*.iml
+
+# Git
+.git/
+.gitignore
+
+# Build output (will be built inside Docker)
+**/target/
+
+# Scripts and docs
+*.sh
+*.md
+*.bak
+*.backup
+
+# Docker & K8s (avoid recursive copy)
+Dockerfile
+docker-compose.yml
+k8s/
+
+# Maven wrapper (if not using)
+.mvn/
+mvnw
+mvnw.cmd
