@@ -3,7 +3,7 @@
 # ============================================
 
 # --- 构建阶段 ---
-FROM eclipse-temurin:17-jdk-alpine AS builder
+FROM eclipse-temurin:21-jdk-alpine AS builder
 WORKDIR /build
 COPY pom.xml .
 COPY template-common/pom.xml template-common/
@@ -21,7 +21,7 @@ RUN --mount=type=cache,target=/root/.m2 \
     mvn clean package -DskipTests -B
 
 # --- 运行阶段 ---
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 LABEL maintainer="bc"
 
 # 安全：创建非 root 用户

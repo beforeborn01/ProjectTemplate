@@ -36,9 +36,9 @@
     <client-version>1.0-SNAPSHOT</client-version>
     <common-version>1.0-SNAPSHOT</common-version>
     <!-- Environment Settings -->
-    <java.version>17</java.version>
-    <maven.compiler.target>17</maven.compiler.target>
-    <maven.compiler.source>17</maven.compiler.source>
+    <java.version>21</java.version>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -50,7 +50,7 @@
     <mybatis.version>3.5.19</mybatis.version>
     <mysql-connector-j.version>9.6.0</mysql-connector-j.version>
     <lombok.version>1.18.36</lombok.version>
-    <testcontainers.version>1.21.4</testcontainers.version>
+    <testcontainers.version>2.0.3</testcontainers.version>
     <jetcache.version>2.7.8</jetcache.version>
 
     <skywalking.version>9.6.0</skywalking.version>
@@ -128,13 +128,13 @@
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
-        <artifactId>junit-jupiter</artifactId>
+        <artifactId>testcontainers-junit-jupiter</artifactId>
         <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
-        <artifactId>mysql</artifactId>
+        <artifactId>testcontainers-mysql</artifactId>
         <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
