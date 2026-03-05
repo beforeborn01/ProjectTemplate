@@ -15,6 +15,7 @@
 | **JetCache** | 2.7.8 | 两级缓存（本地 + Redis） |
 | **Testcontainers** | 2.0.3 | 集成测试容器化 |
 | **SkyWalking** | 9.6.0 | 链路追踪 |
+| **Spring AI** | 1.1.2 | AI 能力集成（OpenAI） |
 
 ## 中间件服务端版本
 

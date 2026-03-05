@@ -2,6 +2,11 @@
 spring:
   application:
     name: template
+  # Spring AI: use fake key + WireMock base-url for tests (see DemoChatServiceTest)
+  ai:
+    openai:
+      api-key: sk-test-fake-key-for-unit-tests
+      base-url: http://localhost:${wiremock.server.port:18089}
   cloud:
     # Disable Nacos for tests
     nacos:
