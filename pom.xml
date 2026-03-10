@@ -28,13 +28,6 @@
 
   <properties>
     <revision>1.0-SNAPSHOT</revision>
-    <api-version>1.0-SNAPSHOT</api-version>
-    <web-version>1.0-SNAPSHOT</web-version>
-    <biz-version>1.0-SNAPSHOT</biz-version>
-    <service-version>1.0-SNAPSHOT</service-version>
-    <dao-version>1.0-SNAPSHOT</dao-version>
-    <client-version>1.0-SNAPSHOT</client-version>
-    <common-version>1.0-SNAPSHOT</common-version>
     <!-- Environment Settings -->
     <java.version>21</java.version>
     <maven.compiler.target>21</maven.compiler.target>
@@ -55,7 +48,6 @@
 
     <skywalking.version>9.6.0</skywalking.version>
     <ttl.version>2.14.5</ttl.version>
-    <dingding-version>0.1.7-SNAPSHOT</dingding-version>
     <spring-ai.version>1.1.2</spring-ai.version>
   </properties>
 
@@ -65,37 +57,37 @@
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-api</artifactId>
-        <version>${api-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-web</artifactId>
-        <version>${web-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-biz</artifactId>
-        <version>${biz-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-service</artifactId>
-        <version>${service-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-dao</artifactId>
-        <version>${dao-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-client</artifactId>
-        <version>${client-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-common</artifactId>
-        <version>${common-version}</version>
+        <version>${revision}</version>
       </dependency>
 
       <!-- 通用工具-->
@@ -207,11 +199,6 @@
         <version>${jetcache.version}</version>
       </dependency>
 
-<!--      <dependency>-->
-<!--        <groupId>com.dingtalk.open</groupId>-->
-<!--        <artifactId>taobao-sdk-java-auto</artifactId>-->
-<!--        <version>1479188381469-20180227</version>-->
-<!--      </dependency>-->
       <dependency>
         <groupId>org.apache.skywalking</groupId>
         <artifactId>apm-toolkit-trace</artifactId>
