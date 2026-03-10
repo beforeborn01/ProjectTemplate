@@ -1,6 +1,6 @@
 package com.bc.template.biz.scheduler;
 
-import com.bc.template.service.util.DingTalkAlertUtil;
+import com.bc.template.service.util.FeishuAlertUtil;
 import jakarta.annotation.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class SchedulerDemoBiz {
 
     @Resource
-    private DingTalkAlertUtil dingTalkAlertUtil;
+    private FeishuAlertUtil feishuAlertUtil;
 
     /**
      * //todo delete
@@ -30,7 +30,7 @@ public class SchedulerDemoBiz {
             System.out.println(3 / n);
         }catch (Exception e){
             System.out.println("task error");
-            dingTalkAlertUtil.alert(e,"scheduler","process task failed");
+            feishuAlertUtil.alert(e, "scheduler", "process task failed");
         }
     }
 

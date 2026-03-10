@@ -19,7 +19,7 @@ spring:
       profile: dev
     nacos:
       config:
-        server-addr: http://127.0.0.1:8848
+        server-addr: ${NACOS_SERVER_ADDR:http://127.0.0.1:8848}
         file-extension: yaml
         namespace: troy
         extension-configs:
@@ -30,7 +30,7 @@ spring:
             group: ${spring.cloud.config.profile}
             refresh: true
       discovery:
-        server-addr: http://127.0.0.1:8848
+        server-addr: ${NACOS_SERVER_ADDR:http://127.0.0.1:8848}
         namespace: troy
         service: ${spring.application.name}
         group: ${spring.cloud.config.profile}
@@ -77,17 +77,14 @@ logging:
                 annotation:
                   RequestMappingHandlerMapping: trace # 配置启动时打印web url映射
 
-# 配置钉钉报警
+# 配置飞书群机器人报警
+# FEISHU_WEBHOOK_URL：飞书群机器人 Webhook 地址（从群机器人配置页面获取）
+# FEISHU_SECRET：签名校验密钥（开启签名校验时填写，否则留空）
 basealert:
-  dingtalk:
-    enable: true
-    cov: PRO
-    asyn: false
-    threads: 3
-    configs:
-      - name: dev # 本地默认为dev
-        webhook: https://oapi.dingtalk.com/robot/send?access_token=c97aae6ac313861fba3c81e9e81987f91e71f860750f1dad48c74be5949c52d7
-        secret: SEC84f42e9988f39c80c64953d9b666343dbd771f44b6308bb84c9b516f5451d609
+  feishu:
+    enable: ${FEISHU_ALERT_ENABLE:true}
+    webhook: ${FEISHU_WEBHOOK_URL:}
+    secret: ${FEISHU_SECRET:}
 
 
 ## //todo 下面配置仅为本地环境使用，正式项目可能要删除以下配置

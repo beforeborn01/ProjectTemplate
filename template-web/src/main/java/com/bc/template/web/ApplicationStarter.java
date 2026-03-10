@@ -1,7 +1,7 @@
 package com.bc.template.web;
 
 import com.alicp.jetcache.anno.config.EnableMethodCache;
-import com.bc.template.service.util.DingTalkAlertUtil;
+import com.bc.template.service.util.FeishuAlertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,9 +26,9 @@ public class ApplicationStarter {
         applicationContext = SpringApplication.run(ApplicationStarter.class, args);
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             log.error("UncaughtExceptionHandler thread=" + t.getName(), e);
-            DingTalkAlertUtil dingTalkAlertUtil = applicationContext.getBean("dingTalkAlertUtil",
-                DingTalkAlertUtil.class);
-            dingTalkAlertUtil.alert(null,"","default exception handler");
+            FeishuAlertUtil feishuAlertUtil = applicationContext.getBean("feishuAlertUtil",
+                FeishuAlertUtil.class);
+            feishuAlertUtil.alert(null, "", "default exception handler");
         });
     }
 

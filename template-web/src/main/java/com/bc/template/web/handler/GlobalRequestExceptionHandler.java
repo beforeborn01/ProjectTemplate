@@ -3,7 +3,7 @@ package com.bc.template.web.handler;
 import com.bc.template.common.exception.ProjectTemplateException;
 import com.bc.template.common.results.ObjectResults;
 import com.bc.template.common.results.Results;
-import com.bc.template.service.util.DingTalkAlertUtil;
+import com.bc.template.service.util.FeishuAlertUtil;
 import com.bc.template.web.util.ContextEnv;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class GlobalRequestExceptionHandler {
     private static final String PARAM_INVALID = "参数校验异常";
 
     @Autowired
-    private DingTalkAlertUtil dingTalkAlertUtil;
+    private FeishuAlertUtil feishuAlertUtil;
 
     /**
      * 参数异常
@@ -81,7 +81,7 @@ public class GlobalRequestExceptionHandler {
         Results results = ObjectResults.createErrorResult(SYSTEM_ERROR_MSG);
         Object urlObject = req.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         String customMessage = "URL : " + (urlObject == null ? req.getRequestURL() : urlObject);
-        dingTalkAlertUtil.alert(e, ContextEnv.getUserEmail(), customMessage);
+        feishuAlertUtil.alert(e, ContextEnv.getUserEmail(), customMessage);
         log.error("systemException", e);
         return results;
     }

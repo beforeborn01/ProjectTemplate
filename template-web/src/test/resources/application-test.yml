@@ -92,10 +92,12 @@ jetcache:
       port: ${redis.port}
       database: 13
 
-# Disable DingTalk alerts for tests
+# Disable Feishu alerts for tests
 basealert:
-  dingtalk:
-    enable: false
+  feishu:
+    webhook: ${FEISHU_WEBHOOK_URL:https://open.feishu.cn/open-apis/bot/v2/hook/64e6d761-3850-4113-a131-140b6f25da51}
+    secret: ${FEISHU_SECRET:oqpOdfg4PWivV0c4Li5pUe}
+    enable: true
 
 # Logging configuration for tests
 logging:

@@ -6,8 +6,7 @@ metadata:
     app: template
 data:
   # Nacos 配置
-  SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR: "nacos-headless.middleware:8848"
-  SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR: "nacos-headless.middleware:8848"
+  NACOS_SERVER_ADDR: "nacos-headless.middleware:8848"
   SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: "prod"
   SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE: "prod"
   # 数据库配置（非敏感部分）
