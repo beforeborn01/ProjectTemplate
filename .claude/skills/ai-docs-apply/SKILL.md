@@ -1,6 +1,6 @@
 ---
 name: ai-docs-apply
-description: 将 docs/07-ai-knowledge-inbox/ 下已确认的草稿文件应用到正式文档。读取草稿中的操作指令（新建文件或修改已有文件），执行实际变更，删除草稿，提交并创建 PR/MR 到主分支。
+description: 将 docs/07-ai-knowledge-inbox/ 下已确认的草稿文件应用到正式文档。读取草稿中的操作指令（新建文件或修改已有文件），执行实际变更，删除草稿，提交到当前分支。
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash
 argument-hint: <draft-filename>
 ---
@@ -80,83 +80,14 @@ rm docs/07-ai-knowledge-inbox/{filename}
 
 ---
 
-## Step 5：提交变更并创建 PR/MR
+## Step 5：提交变更
 
-### 5.1 Git commit
-
-将所有变更（新建/修改的正式文档 + 删除的草稿文件）一并提交：
+将所有变更（新建/修改的正式文档 + 删除的草稿文件）一并提交到当前分支：
 
 ```bash
 git add -A
 git commit -m "docs: apply ai knowledge draft {draft-filename-without-ext}"
 ```
-
-### 5.2 检测平台
-
-通过 remote URL 判断平台：
-
-```bash
-git remote get-url origin
-```
-
-- URL 含 `github.com` → **GitHub**，使用 `gh` CLI
-- 其他（含 `gitlab`、私有域名等）→ **GitLab**，使用 `glab` CLI
-
-同时获取默认主分支名：
-
-```bash
-git remote show origin | grep 'HEAD branch' | awk '{print $NF}'
-```
-
-### 5.3 推送当前分支
-
-```bash
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-git push origin $CURRENT_BRANCH
-```
-
-### 5.4 创建 PR/MR
-
-构造 PR/MR 的 title 和 body：
-
-- **title**：`docs: AI 知识同步 - {draft-slug}`
-- **body**：列出每条应用的知识点及目标文件、来源草稿文件名
-
-**GitHub：**
-
-```bash
-gh pr create \
-  --title "docs: AI 知识同步 - {draft-slug}" \
-  --body "## 变更内容
-
-{每条知识点：操作类型 + 目标文件}
-
-## 来源
-通过 \`/ai-docs-apply\` 从 AI 对话历史中提取并应用。
-草稿来源：\`docs/07-ai-knowledge-inbox/{draft-filename}\`（已删除）" \
-  --base {默认主分支}
-```
-
-**GitLab：**
-
-```bash
-glab mr create \
-  --title "docs: AI 知识同步 - {draft-slug}" \
-  --description "## 变更内容
-
-{每条知识点：操作类型 + 目标文件}
-
-## 来源
-通过 \`/ai-docs-apply\` 从 AI 对话历史中提取并应用。
-草稿来源：\`docs/07-ai-knowledge-inbox/{draft-filename}\`（已删除）" \
-  --target-branch {默认主分支} \
-  --remove-source-branch
-```
-
-### 5.5 异常处理
-
-- 若 `gh`/`glab` 未安装：输出提示，跳过 PR/MR 创建，commit + push 仍正常执行
-- 若 push 失败：报告错误，不强制操作
 
 ---
 
@@ -166,4 +97,3 @@ glab mr create \
 - 成功应用的条目列表（操作类型 + 目标文件）
 - 跳过的条目及原因
 - Git commit hash
-- PR/MR 链接（如创建成功）

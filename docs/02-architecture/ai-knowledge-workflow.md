@@ -21,12 +21,11 @@
   ↓ 读取已确认草稿
   ↓ 执行新建文件 or 修改已有文件
   ↓ 草稿文件直接删除（历史追溯看 git log）
-  ↓ commit 变更 + 自动检测 GitHub/GitLab 创建 PR/MR 到 main/master 分支
+  ↓ commit 变更到当前分支
 ```
 
 **变更说明：**
 - 草稿应用后**直接删除**，不再保留带完成标记的文件（`07-ai-knowledge-inbox` 作为收件箱，处理完的文件没有保留价值）
-- `ai-docs-apply` 执行后自动创建 PR/MR，目标分支为 `main` 或 `master`，自动检测 GitHub（`gh pr create`）或 GitLab（`glab mr create`）环境
 
 ### 两种触发模式
 
@@ -64,9 +63,4 @@
 
 1. **应用文档变更**：NEW_FILE 新建 / MODIFY 修改目标文件
 2. **删除草稿文件**：收件箱保持干净，历史通过 git log 追溯
-3. **Git commit**：`docs: apply ai knowledge draft {draft-name}`
-4. **自动检测平台并创建 PR/MR**：
-   - 通过 `git remote get-url origin` 判断平台
-   - URL 含 `github.com` → 使用 `gh pr create`，目标分支为默认主分支
-   - 其他（GitLab 或私有域名）→ 使用 `glab mr create`，目标分支为默认主分支
-   - 若 CLI 工具未安装，跳过 PR/MR 创建，只执行 commit + push
+3. **Git commit**：`docs: apply ai knowledge draft {draft-name}`（提交到当前分支，不自动 push 或创建 PR/MR）

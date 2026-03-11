@@ -66,12 +66,12 @@ print('\n---\n'.join(messages[-60:]) if messages else '（最近1天无有效会
 "`
 ```
 
-**获取最近1天 git 变更摘要：**
+**获取最近1天 git 变更摘要（基于主分支，非当前分支）：**
 ```
-!`git log --since="24 hours ago" --oneline --no-merges 2>/dev/null || echo "（无最近提交）"`
+!`MAIN_BRANCH=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | awk '{print $NF}'); MAIN_BRANCH=${MAIN_BRANCH:-develop}; git log origin/$MAIN_BRANCH --since="24 hours ago" --oneline --no-merges 2>/dev/null || echo "（无最近提交）"`
 ```
 ```
-!`git diff HEAD~3...HEAD --stat 2>/dev/null | head -40 || echo "（无变更统计）"`
+!`MAIN_BRANCH=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | awk '{print $NF}'); MAIN_BRANCH=${MAIN_BRANCH:-develop}; git diff origin/$MAIN_BRANCH~3...origin/$MAIN_BRANCH --stat 2>/dev/null | head -40 || echo "（无变更统计）"`
 ```
 
 ---
