@@ -1,0 +1,250 @@
+---
+globs: */test/java/**/*.java
+alwaysApply: false
+description: 测试驱动开发(TDD)规范，包括TDD工作流程、单元测试规则、集成测试规则以及测试覆盖率要求
+---
+# 测试驱动开发(TDD)规范
+
+## TDD 开发流程
+1. **明确需求和功能点**：在开始编码前，先明确并记录功能需求和验收标准
+   - 编写功能点描述，确保团队对需求有一致理解
+   - 将大功能拆分成小功能点，每个功能点都可以独立测试
+   - 记录每个功能点的预期行为和验收标准
+2. **先写测试后写代码**：基于功能点描述，为每个功能点编写单元测试
+3. **红-绿-重构**：遵循"红-绿-重构"循环
+   - **红**：编写一个会失败的测试（验证需求）
+   - **绿**：编写最简单的代码使测试通过
+   - **重构**：重构代码以改进设计，同时保证测试通过
+4. **小步快走**：每个测试和功能应该保持小而集中，一次实现一个功能点
+5. **持续集成**：频繁提交代码并确保所有测试通过
+
+## 功能描述规范
+1. **存放位置**：功能描述以JavaDoc注释形式添加在测试类和测试方法中
+   - 类级别注释：描述被测类的整体功能和测试范围
+   - 方法级别注释：描述具体场景和验收标准
+2. **创建流程**：
+   - 先创建测试类文件（如果不存在）
+   - 在测试类顶部添加完整功能描述（以JavaDoc注释形式）
+   - 为每个测试场景创建测试方法框架和描述注释
+   - 然后再逐个实现测试方法
+3. **注释格式**：
+   - 类级别注释：
+     ```java
+     /**
+      * 功能：[功能名称]
+      * 
+      * 描述：[功能整体描述]
+      * 
+      * 测试场景列表：
+      * 1. [场景1名称]
+      * 2. [场景2名称]
+      * ...
+      */
+     public class XxxTest {
+         // 测试方法
+     }
+     ```
+   - 方法级别注释：
+     ```java
+     /**
+      * 场景：[场景名称]
+      * 
+      * Given: [前提条件]
+      * When: [执行操作]
+      * Then: [期望结果]
+      * 
+      * 验收标准：
+      * - [标准1]
+      * - [标准2]
+      * ...
+      */
+     @Test
+     public void testXxx_ScenarioYyy() {
+         // 测试代码
+     }
+     ```
+
+## TDD 最佳实践
+1. **功能拆分与描述**：
+   - 先记录功能描述和验收标准，再进行开发
+   - 每个功能描述应该包含：预期行为、输入条件、期望输出、边界条件
+   - 功能描述可以采用 BDD 风格："Given-When-Then"（前提-操作-结果）格式
+   - 示例：
+     ```
+     功能：根据ID获取用户信息
+     
+     场景1：用户存在
+     Given: 存在ID为"12345"的用户，姓名为"张三"，年龄为30岁
+     When: 调用getUserById("12345")
+     Then: 返回包含正确信息的UserDTO对象
+     
+     场景2：用户不存在
+     Given: 数据库中不存在ID为"99999"的用户
+     When: 调用getUserById("99999")
+     Then: 返回null
+     
+     场景3：ID为空
+     Given: ID参数为null或空字符串
+     When: 调用getUserById(null)或getUserById("")
+     Then: 抛出IllegalArgumentException异常
+     ```
+2. **先易后难**：从简单场景开始，逐步添加复杂场景的测试
+3. **边界测试**：着重测试边界条件和特殊情况
+4. **测试隔离**：每个测试应该独立且不依赖于其他测试的执行结果
+5. **可读性**：测试代码应该清晰易读，可作为功能代码的文档
+
+## 单元测试规则
+1. 每个业务类至少有一个对应的测试类
+2. 测试类命名为 `被测试类名Test`，例如 `DemoServiceTest`
+3. 测试方法命名为 `test被测试方法名_场景描述`，例如 `testGetUserById_UserNotExist`
+4. 单元测试应该是独立的，不依赖于外部资源
+5. 使用 Mock 框架模拟依赖项
+
+## 集成测试
+1. DAO 层测试使用嵌入式数据库或测试容器（如 `MysqlContainerBase`）
+2. Controller 测试使用 Spring MVC Test 框架（如 `DemoControllerTest`）
+3. 完整 MVC 测试使用 `DemoControllerWithRealMvcTest` 等类
+
+## 测试资源
+1. 测试数据 SQL 放在 `src/test/resources` 目录下
+2. 测试配置文件与生产环境配置文件分离
+
+## 测试覆盖率
+1. 业务核心逻辑测试覆盖率应达到 80% 以上
+2. 异常路径也需要测试，确保错误处理逻辑正确
+
+## TDD 示例
+以下是一个简单的 TDD 开发流程示例：
+
+### 1. 创建测试类和添加功能描述
+```java
+/**
+ * 功能：用户信息服务
+ * 
+ * 描述：提供根据不同条件查询用户信息的服务
+ * 
+ * 测试场景列表：
+ * 1. 根据ID获取存在的用户
+ * 2. 根据ID获取不存在的用户
+ * 3. 使用空ID调用获取用户方法
+ */
+public class DemoServiceTest {
+    
+    @Mock
+    private DemoMapper demoMapper;
+    
+    @InjectMocks
+    private DemoService demoService;
+    
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+    }
+    
+    /**
+     * 场景：根据ID获取存在的用户
+     * 
+     * Given: 存在ID为"12345"的用户，姓名为"张三"，年龄为30岁
+     * When: 调用getUserById("12345")
+     * Then: 返回包含正确用户信息的UserDTO对象
+     * 
+     * 验收标准：
+     * - 方法应返回非null的UserDTO对象
+     * - 返回对象的属性应与数据库中的记录匹配
+     */
+    @Test
+    public void testGetUserById_Success() {
+        // TODO: 实现测试
+    }
+    
+    /**
+     * 场景：根据ID获取不存在的用户
+     * 
+     * Given: 数据库中不存在ID为"99999"的用户
+     * When: 调用getUserById("99999")
+     * Then: 返回null
+     * 
+     * 验收标准：
+     * - 方法应返回null
+     */
+    @Test
+    public void testGetUserById_UserNotExist() {
+        // TODO: 实现测试
+    }
+    
+    /**
+     * 场景：使用空ID调用获取用户方法
+     * 
+     * Given: ID参数为null或空字符串
+     * When: 调用getUserById(null)或getUserById("")
+     * Then: 抛出IllegalArgumentException异常
+     * 
+     * 验收标准：
+     * - 方法应抛出包含适当错误信息的IllegalArgumentException异常
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserById_EmptyId() {
+        // TODO: 实现测试
+    }
+}
+```
+
+### 2. 实现第一个测试（红）
+```java
+/**
+ * 场景：根据ID获取存在的用户
+ * 
+ * Given: 存在ID为"12345"的用户，姓名为"张三"，年龄为30岁
+ * When: 调用getUserById("12345")
+ * Then: 返回包含正确用户信息的UserDTO对象
+ * 
+ * 验收标准：
+ * - 方法应返回非null的UserDTO对象
+ * - 返回对象的属性应与数据库中的记录匹配
+ */
+@Test
+public void testGetUserById_Success() {
+    // 准备测试数据
+    String userId = "12345";
+    UserPO expectedUserPO = new UserPO();
+    expectedUserPO.setId(userId);
+    expectedUserPO.setName("张三");
+    expectedUserPO.setAge(30);
+    
+    // Mock依赖
+    when(demoMapper.findById(userId)).thenReturn(expectedUserPO);
+    
+    // 执行被测方法
+    UserDTO result = demoService.getUserById(userId);
+    
+    // 验证结果
+    assertNotNull(result);
+    assertEquals(userId, result.getId());
+    assertEquals("张三", result.getName());
+    assertEquals(Integer.valueOf(30), result.getAge());
+    
+    // 验证依赖方法被调用
+    verify(demoMapper).findById(userId);
+}
+```
+
+### 3. 实现功能（绿）
+```java
+public UserDTO getUserById(String id) {
+    UserPO userPO = demoMapper.findById(id);
+    if (userPO == null) {
+        return null;
+    }
+    return BeanUtil.toBean(userPO, UserDTO.class);
+}
+```
+
+### 4. 重构优化（重构）
+```java
+public UserDTO getUserById(String id) {
+    Assert.notEmpty(id, "用户ID不能为空");
+    return Optional.ofNullable(demoMapper.findById(id))
+            .map(userPO -> BeanUtil.toBean(userPO, UserDTO.class))
+            .orElse(null);
+}
+```

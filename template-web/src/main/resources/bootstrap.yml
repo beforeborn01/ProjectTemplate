@@ -2,24 +2,35 @@
 spring:
   application:
     name: template
+  # 优雅停机配置
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  # Spring AI - OpenAI 配置
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:sk-placeholder}
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com}
+      chat:
+        options:
+          model: ${OPENAI_MODEL:gpt-4o}
+          temperature: 0.7
   cloud:
     config:
       profile: dev
     nacos:
       config:
-        server-addr: http://127.0.0.1:8848
+        server-addr: ${NACOS_SERVER_ADDR:http://127.0.0.1:8848}
         file-extension: yaml
         namespace: troy
-        ext-config[0]:
-          data-id: application-${spring.cloud.config.profile}.yaml
-          group: ${spring.cloud.config.profile}
-          refresh: true
-        ext-config[1]:
-          data-id: ${spring.application.name}-${spring.cloud.config.profile}.yaml
-          group: ${spring.cloud.config.profile}
-          refresh: true
+        extension-configs:
+          - data-id: application-${spring.cloud.config.profile}.yaml
+            group: ${spring.cloud.config.profile}
+            refresh: true
+          - data-id: ${spring.application.name}-${spring.cloud.config.profile}.yaml
+            group: ${spring.cloud.config.profile}
+            refresh: true
       discovery:
-        server-addr: http://127.0.0.1:8848
+        server-addr: ${NACOS_SERVER_ADDR:http://127.0.0.1:8848}
         namespace: troy
         service: ${spring.application.name}
         group: ${spring.cloud.config.profile}
@@ -38,16 +49,20 @@ management:
   endpoints:
     web:
       exposure:
-        include: 'prometheus,health' #暴露prometheus端点、health端点，其他隐藏
+        include: 'prometheus,health,info' #暴露prometheus、health、info端点
   endpoint:
     health:
-      show-details: NEVER
+      show-details: WHEN_AUTHORIZED
+      probes:
+        enabled: true  # 启用 K8s 探针: /actuator/health/liveness, /actuator/health/readiness
   health:
     defaults:
-      enabled: false
+      enabled: true
+
 # web服务端口号
 server:
   port: 9915
+  shutdown: graceful  # 优雅停机，配合K8s preStop hook
 
 # log配置
 logging:
@@ -62,17 +77,14 @@ logging:
                 annotation:
                   RequestMappingHandlerMapping: trace # 配置启动时打印web url映射
 
-# 配置钉钉报警
+# 配置飞书群机器人报警
+# FEISHU_WEBHOOK_URL：飞书群机器人 Webhook 地址（从群机器人配置页面获取）
+# FEISHU_SECRET：签名校验密钥（开启签名校验时填写，否则留空）
 basealert:
-  dingtalk:
-    enable: true
-    cov: PRO
-    asyn: false
-    threads: 3
-    configs:
-      - name: dev # 本地默认为dev
-        webhook: https://oapi.dingtalk.com/robot/send?access_token=c97aae6ac313861fba3c81e9e81987f91e71f860750f1dad48c74be5949c52d7
-        secret: SEC84f42e9988f39c80c64953d9b666343dbd771f44b6308bb84c9b516f5451d609
+  feishu:
+    enable: ${FEISHU_ALERT_ENABLE:true}
+    webhook: ${FEISHU_WEBHOOK_URL:}
+    secret: ${FEISHU_SECRET:}
 
 
 ## //todo 下面配置仅为本地环境使用，正式项目可能要删除以下配置
@@ -101,18 +113,18 @@ seal:
         url: ${jdbc.url}
         username: root
         password: Admin123!
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
       dataSource_preTest:
         url: ${jdbc.url}
         username: root
         password: Admin123!
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
 db:
   druid:
     url: ${jdbc.url}
     username: ${jdbc.username}
     password: ${jdbc.password}
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 # jetcache 缓存配置 示例
 jetcache:

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @Description:
  * @date Date : 2022年12月08日 10:59
  */
-@SpringBootTest(classes = ApplicationStarter.class)
+@SpringBootTest(classes = ApplicationStarter.class, properties = {"spring.profiles.active=test"})
 @ExtendWith({MysqlContainerBase.class, RedisContainerBase.class}) // 表明依赖的测试套件
 //@DirtiesContext // 配置后则会启动一个新的spring容器
 public class DemoControllerTest {

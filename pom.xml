@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>2.3.12.RELEASE</version>
+    <version>3.5.11</version>
     <relativePath/>
   </parent>
 
@@ -27,29 +27,28 @@
   </modules>
 
   <properties>
-    <api-version>1.0-SNAPSHOT</api-version>
-    <web-version>1.0-SNAPSHOT</web-version>
-    <biz-version>1.0-SNAPSHOT</biz-version>
-    <service-version>1.0-SNAPSHOT</service-version>
-    <dao-version>1.0-SNAPSHOT</dao-version>
-    <client-version>1.0-SNAPSHOT</client-version>
-    <common-version>1.0-SNAPSHOT</common-version>
+    <revision>1.0-SNAPSHOT</revision>
     <!-- Environment Settings -->
-    <java.version>1.8</java.version>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <java.version>21</java.version>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- Spring cloud Settings -->
-    <mybatis-spring.version>2.1.4</mybatis-spring.version>
-    <spring-cloud.version>Hoxton.SR10</spring-cloud.version>
-    <spring-cloud-nacos.version>2.0.1.RELEASE</spring-cloud-nacos.version>
-    <druid.version>1.1.9</druid.version>
-    <mybatis.version>3.5.6</mybatis.version>
-    <mysql-connector-java.version>5.1.29</mysql-connector-java.version>
-    <lombok.version>1.18.0</lombok.version>
-    <dingding-version>0.1.7-SNAPSHOT</dingding-version>
+    <mybatis-spring.version>3.0.4</mybatis-spring.version>
+    <spring-cloud.version>2025.0.0</spring-cloud.version>
+    <spring-cloud-nacos.version>2025.0.0.0</spring-cloud-nacos.version>
+    <druid.version>1.2.27</druid.version>
+    <mybatis.version>3.5.19</mybatis.version>
+    <mysql-connector-j.version>9.6.0</mysql-connector-j.version>
+    <lombok.version>1.18.36</lombok.version>
+    <testcontainers.version>2.0.3</testcontainers.version>
+    <jetcache.version>2.7.8</jetcache.version>
+
+    <skywalking.version>9.6.0</skywalking.version>
+    <ttl.version>2.14.5</ttl.version>
+    <spring-ai.version>1.1.2</spring-ai.version>
   </properties>
 
 
@@ -58,44 +57,44 @@
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-api</artifactId>
-        <version>${api-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-web</artifactId>
-        <version>${web-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-biz</artifactId>
-        <version>${biz-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-service</artifactId>
-        <version>${service-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-dao</artifactId>
-        <version>${dao-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-client</artifactId>
-        <version>${client-version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.bc</groupId>
         <artifactId>template-common</artifactId>
-        <version>${common-version}</version>
+        <version>${revision}</version>
       </dependency>
 
       <!-- 通用工具-->
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.12.0</version>
+        <version>3.17.0</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -105,70 +104,31 @@
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-core</artifactId>
-        <version>5.8.11</version>
+        <version>5.8.32</version>
       </dependency>
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-all</artifactId>
-        <version>5.8.11</version>
-      </dependency>
-
-      <!-- 单测依赖 -->
-      <!-- 显示指定junit-jupiter-xx的版本，解决和test-starter中版本冲突问题 -->
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <version>5.8.2</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>5.8.2</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-params</artifactId>
-        <version>5.8.2</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.8.2</version>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.vintage</groupId>
-        <artifactId>junit-vintage-engine</artifactId>
-        <version>5.8.2</version>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.platform</groupId>
-        <artifactId>junit-platform-commons</artifactId>
-        <version>1.8.2</version>
-        <scope>test</scope>
+        <version>5.8.32</version>
       </dependency>
 
 
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers</artifactId>
-        <version>1.17.2</version>
+        <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <version>1.17.2</version>
+        <artifactId>testcontainers-junit-jupiter</artifactId>
+        <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.testcontainers</groupId>
-        <artifactId>mysql</artifactId>
-        <version>1.17.2</version>
+        <artifactId>testcontainers-mysql</artifactId>
+        <version>${testcontainers.version}</version>
         <scope>test</scope>
       </dependency>
 
@@ -178,6 +138,14 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
         <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-bom</artifactId>
+        <version>${spring-ai.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -200,9 +168,9 @@
 
       <!--MySQL Driver驱动包-->
       <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>${mysql-connector-java.version}</version>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>${mysql-connector-j.version}</version>
       </dependency>
 
       <dependency>
@@ -222,28 +190,19 @@
       <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>transmittable-thread-local</artifactId>
-        <version>2.11.5</version>
+        <version>${ttl.version}</version>
       </dependency>
-      <dependency>
-        <groupId>com.github.pagehelper</groupId>
-        <artifactId>pagehelper-spring-boot-starter</artifactId>
-        <version>1.4.5</version>
-      </dependency>
+
       <dependency>
         <groupId>com.alicp.jetcache</groupId>
         <artifactId>jetcache-starter-redis</artifactId>
-        <version>2.6.7</version>
+        <version>${jetcache.version}</version>
       </dependency>
 
-<!--      <dependency>-->
-<!--        <groupId>com.dingtalk.open</groupId>-->
-<!--        <artifactId>taobao-sdk-java-auto</artifactId>-->
-<!--        <version>1479188381469-20180227</version>-->
-<!--      </dependency>-->
       <dependency>
         <groupId>org.apache.skywalking</groupId>
         <artifactId>apm-toolkit-trace</artifactId>
-        <version>8.0.0</version>
+        <version>${skywalking.version}</version>
       </dependency>
 
     </dependencies>

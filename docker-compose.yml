@@ -1,13 +1,68 @@
-# 使用java8的容器，运行ProjectTemplate服务
-version: '3'
+# 本地开发环境 docker-compose
+# 用于启动项目依赖的中间件服务
+
 services:
-  ProjectTemplate:
-    image: java:8
-    container_name: ProjectTemplate
-    restart: always
+  # MySQL 数据库
+  mysql:
+    image: mysql:8.0
+    container_name: template-mysql
+    restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin123!
+      MYSQL_DATABASE: db
     volumes:
-      - ./ProjectTemplate:/ProjectTemplate
-    working_dir: /ProjectTemplate
-    command: java -jar ProjectTemplate.jar
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: template-redis
+    restart: unless-stopped
+    ports:
+      - "88881:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Nacos 注册/配置中心
+  nacos:
+    image: nacos/nacos-server:v2.4.3
+    container_name: template-nacos
+    restart: unless-stopped
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    environment:
+      MODE: standalone
+      SPRING_DATASOURCE_PLATFORM: ""
+      NACOS_AUTH_ENABLE: "false"
+
+  # 应用服务（可选，也可直接在 IDE 中启动）
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: template-app
+    restart: unless-stopped
+    ports:
+      - "9915:9915"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - JAVA_OPTS=-XX:MaxRAMPercentage=75.0
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  mysql-data:

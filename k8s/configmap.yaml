@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: template-config
+  labels:
+    app: template
+data:
+  # Nacos 配置
+  NACOS_SERVER_ADDR: "nacos-headless.middleware:8848"
+  SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: "prod"
+  SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE: "prod"
+  # 数据库配置（非敏感部分）
+  JDBC_URL: "jdbc:mysql://mysql-primary.middleware:3306/db?useSSL=false&allowMultiQueries=true"
+  JDBC_USERNAME: "app"
+  # Redis 配置（非敏感部分）
+  REDIS_HOST: "redis-master.middleware"
+  REDIS_PORT: "6379"
+  # OpenAI 配置（非敏感部分，API Key 应通过 Secret 注入）
+  OPENAI_BASE_URL: "https://api.openai.com"
+  OPENAI_MODEL: "gpt-4o"

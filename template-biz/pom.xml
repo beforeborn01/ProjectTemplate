@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>template-biz</artifactId>
-  <version>${biz-version}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <!-- 依赖项目自身的包,请勿增删 start -->

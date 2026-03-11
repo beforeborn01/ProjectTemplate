@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: template
+  labels:
+    app: template
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: template
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0  # 零停机更新
+  template:
+    metadata:
+      labels:
+        app: template
+    spec:
+      # 安全上下文：非 root 运行
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      # 优雅停机：给应用足够时间处理完请求
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: template
+          image: ${DOCKER_REGISTRY}/template:${IMAGE_TAG}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9915
+              protocol: TCP
+          # 资源限制
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+          # 环境变量（从 ConfigMap 和 Secret 注入）
+          envFrom:
+            - configMapRef:
+                name: template-config
+          env:
+            - name: JAVA_OPTS
+              value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            # 数据库密码从 Secret 注入
+            - name: JDBC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: template-secret
+                  key: jdbc-password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: template-secret
+                  key: redis-password
+                  optional: true
+          # 启动探针：给应用充足的启动时间
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9915
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 30  # 最多等待 10 + 30*5 = 160 秒
+          # 存活探针
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 9915
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 3
+          # 就绪探针
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 9915
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          # preStop hook：让 K8s 先从 Service 摘除流量
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 5"]

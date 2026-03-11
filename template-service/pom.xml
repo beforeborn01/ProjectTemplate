@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>template-service</artifactId>
-  <version>${service-version}</version>
+  <version>${revision}</version>
 
 
   <dependencies>
@@ -30,11 +30,13 @@
       <artifactId>spring-cloud-context</artifactId>
     </dependency>
 
+    <!-- Spring AI - OpenAI -->
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-model-openai</artifactId>
+    </dependency>
+
     <!-- 其他第三方依赖 -->
-<!--    <dependency>-->
-<!--      <groupId>com.dingtalk.open</groupId>-->
-<!--      <artifactId>taobao-sdk-java-auto</artifactId>-->
-<!--    </dependency>-->
     <dependency>
       <groupId>org.apache.skywalking</groupId>
       <artifactId>apm-toolkit-trace</artifactId>

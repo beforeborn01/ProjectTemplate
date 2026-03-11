@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +22,7 @@ import com.bc.template.web.ApplicationStarter;
  * @Description:
  * @date Date : 2022年11月16日 15:05
  */
-@SpringBootTest(classes = ApplicationStarter.class)
+@SpringBootTest(classes = ApplicationStarter.class, properties = {"spring.profiles.active=test"})
 @ExtendWith({MysqlContainerBase.class}) // 表明依赖的测试套件,可以是多个
 public class DemoMapperTest {
 

@@ -1,0 +1,39 @@
+---
+alwaysApply: true
+globs: pom.xml,*/pom.xml,*/src/**/*.java
+description: 项目模块结构与依赖关系规范，指导开发人员正确组织代码和遵循模块间依赖原则
+---
+# 项目结构
+（@appName为项目bootstrap.yml文件中定义的spring.application.name）
+这是一个基于Spring Boot的多模块项目模板，遵循分层架构设计。各模块职责如下：
+
+- **@appName-api**: 定义服务接口、请求和响应对象
+- **@appName-biz**: 业务逻辑实现层
+- **@appName-client**: 客户端调用接口
+- **@appName-common**: 公共工具类、枚举、异常和结果封装
+- **@appName-dao**: 数据访问层，包含Mybatis配置和映射
+- **@appName-service**: 服务层实现
+- **@appName-web**: Web应用入口，包含控制器、参数处理和视图对象
+# 模块依赖关系
+
+项目模块间的依赖关系遵循以下原则：
+
+1. **依赖方向**: 从上层向下层依赖，避免循环依赖
+2. **依赖关系**:
+   - @appName-web 依赖 @appName-api, @appName-biz, @appName-dao, @appName-common
+   - @appName-biz 依赖 @appName-service, @appName-common, @appName-dao
+   - @appName-service 依赖 @appName-common, @appName-dao
+   - @appName-dao 依赖 @appName-common
+   - @appName-api 依赖 @appName-common
+   - @appName-client 依赖 @appName-api, @appName-common
+   
+3. **依赖原则**:
+   - 不允许跨层调用 （备注：web层一般调用的是biz层，但如果业务比较简单，也可以跨层调用service层，这是唯一允许跨层调用的地方）
+   - 公共工具类放在 @appName-common 模块
+   - 数据库访问逻辑仅在 @appName-dao 模块中
+   - 外部服务调用通过 @appName-client 模块
+
+4. **主要配置文件**:
+   - Maven配置: [pom.xml](mdc:pom.xml)
+   - 应用配置: [@appName-web/src/main/resources/bootstrap.yml](mdc:@appName-web/src/main/resources/bootstrap.yml)
+   - MyBatis配置: [@appName-dao/src/main/resources/mybatis-config.xml](mdc:@appName-dao/src/main/resources/mybatis-config.xml)

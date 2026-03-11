@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 公共标签
+commonLabels:
+  project: template
+
+# 命名空间（按环境覆盖）
+namespace: default
+
+# 包含的资源
+resources:
+  - deployment.yaml
+  - service.yaml
+  - configmap.yaml
+
+# 镜像替换（CI/CD 中通过 kustomize edit set image 修改）
+images:
+  - name: ${DOCKER_REGISTRY}/template
+    newName: your-registry.com/template
+    newTag: latest

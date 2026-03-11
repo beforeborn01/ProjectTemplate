@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>template-client</artifactId>
-  <version>${client-version}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <!-- 依赖项目自身的包,请勿增删 start -->
@@ -24,9 +24,10 @@
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <optional>true</optional>
     </dependency>
+    <!-- Netflix Ribbon has been removed in Spring Cloud 2023.x, replaced by Spring Cloud LoadBalancer -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+      <artifactId>spring-cloud-starter-loadbalancer</artifactId>
       <optional>true</optional>
     </dependency>
     <!-- -->

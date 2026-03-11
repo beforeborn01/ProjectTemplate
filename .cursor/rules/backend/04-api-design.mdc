@@ -1,0 +1,24 @@
+---
+globs: */api/interfaces/*.java,*/web/controller/*.java,*/web/apiimpl/*.java
+alwaysApply: false
+description: API 设计规范，包括RESTful API设计原则、请求和响应规范、接口文档规范以及错误处理
+---
+# API 设计规范
+
+## RESTful API 设计原则
+1. 使用适当的 HTTP 方法: GET, POST, PUT, DELETE
+2. URL 使用名词而非动词，例如 `/users` 而不是 `/getUsers`
+3. 资源层次化，例如 `/users/{id}/orders`
+
+## 请求和响应规范
+1. api层请求参数使用`xxReq` 封装，返回使用`xxResp`封装；web层请求参数使用`xxParam`,返回使用`xxVO`
+2. 响应统一使用 `Results<T>` 系列封装:
+   - `ObjectResults<T>` - 无数据响应 或者 单对象响应
+   - `ListObjectResults<T>` - 列表响应
+
+## 接口文档
+1. 每个接口需描述功能、参数、返回值和可能的错误码
+
+## 错误码和异常处理
+1. 在 `Results` 类中封装错误码和错误信息
+2. 通过 `GlobalRequestExceptionHandler` 处理全局异常
