@@ -1,5 +1,19 @@
 {
   "enabledPlugins": {
     "backend-development@claude-code-workflows": true
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash(git *)",
+      "Bash(mvn *)",
+      "Bash(docker-compose *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(head *)",
+      "Bash(rm docs/07-ai-knowledge-inbox/*)"
+    ]
   }
 }
